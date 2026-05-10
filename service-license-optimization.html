@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Licence Optimisation Services — Proteam Advisory</title>
+<meta name="description" content="Reduce annual software spend by 15-20% beyond your previously negotiated terms. Specialist licence optimisation across IBM, Oracle, SAP, Microsoft and more." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+
+<style>
+  /* SERVICE DETAIL PAGES */
+  .svc-detail-hero .stat-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    margin-top: 56px;
+    padding-top: 40px;
+    border-top: 1px solid var(--line);
+  }
+  .svc-detail-hero .stat-row .stat-num {
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 44px;
+    line-height: 1;
+    color: var(--rust);
+    letter-spacing: -0.03em;
+    margin-bottom: 8px;
+    font-variation-settings: "opsz" 144;
+  }
+  .svc-detail-hero .stat-row .stat-lbl {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--navy-soft);
+  }
+  @media (max-width: 768px) {
+    .svc-detail-hero .stat-row { grid-template-columns: 1fr; gap: 24px; }
+  }
+
+  /* Overview split */
+  .svc-overview {
+    background: var(--paper);
+    padding: 110px 0;
+  }
+  .svc-overview-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .svc-overview-grid h2 {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: clamp(32px, 4vw, 48px);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--navy);
+    margin-bottom: 24px;
+    font-variation-settings: "opsz" 144;
+  }
+  .svc-overview-grid h2 em { font-family: var(--serif); font-variation-settings: "opsz" 144; font-style: italic; color: var(--rust); font-weight: 300; }
+  .svc-overview-grid p {
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--navy-soft);
+    margin-bottom: 18px;
+  }
+  .svc-overview-grid p strong { color: var(--navy); font-weight: 600; }
+  @media (max-width: 960px) {
+    .svc-overview-grid { grid-template-columns: 1fr; gap: 32px; }
+  }
+
+  /* What's included */
+  .includes {
+    background: var(--cream);
+    padding: 110px 0;
+  }
+  .includes-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    margin-top: 48px;
+  }
+  .includes-item {
+    background: var(--cream);
+    padding: 40px 36px;
+    transition: background 0.3s ease;
+  }
+  .includes-item:hover { background: var(--paper); }
+  .includes-item .num {
+    font-family: var(--sans);
+    font-style: italic;
+    color: var(--amber);
+    font-size: 14px;
+    margin-bottom: 16px;
+  }
+  .includes-item h4 {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 1.2;
+    color: var(--navy);
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+    font-variation-settings: "opsz" 144;
+  }
+  .includes-item p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--navy-soft);
+  }
+  @media (max-width: 768px) {
+    .includes-grid { grid-template-columns: 1fr; }
+  }
+
+  /* PROCESS (numbered timeline-style) */
+  .svc-process {
+    background: var(--navy);
+    color: var(--cream);
+    padding: 120px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .svc-process::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+  .svc-process .container { position: relative; }
+  .svc-process .section-title { color: var(--cream); }
+  .svc-process .section-eyebrow { color: var(--amber-bright); }
+  .svc-process .section-eyebrow::before { background: var(--amber-bright); }
+  .svc-process .section-lede { color: rgba(244,239,230,0.7); }
+
+  .svc-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 56px;
+    border-top: 1px solid var(--line-cream);
+  }
+  .svc-step {
+    border-bottom: 1px solid var(--line-cream);
+    padding: 40px 0;
+    display: grid;
+    grid-template-columns: 80px 280px 1fr;
+    gap: 40px;
+    align-items: start;
+    transition: padding 0.3s ease;
+  }
+  .svc-step:hover { padding-left: 16px; }
+  .svc-step .num {
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 56px;
+    line-height: 0.9;
+    color: var(--amber-bright);
+    letter-spacing: -0.04em;
+    font-variation-settings: "opsz" 144;
+  }
+  .svc-step h4 {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 26px;
+    line-height: 1.15;
+    color: var(--cream);
+    letter-spacing: -0.015em;
+    font-variation-settings: "opsz" 144;
+  }
+  .svc-step p {
+    font-size: 16px;
+    line-height: 1.65;
+    color: rgba(244,239,230,0.75);
+  }
+  @media (max-width: 960px) {
+    .svc-step { grid-template-columns: 1fr; gap: 16px; }
+  }
+
+  /* Featured proof */
+  .proof {
+    background: var(--paper);
+    padding: 110px 0;
+  }
+  .proof-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 64px;
+    align-items: center;
+  }
+  .proof-quote {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: clamp(28px, 3.6vw, 42px);
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    color: var(--navy);
+    font-variation-settings: "opsz" 144;
+  }
+  .proof-quote em { font-family: var(--serif); font-variation-settings: "opsz" 144; font-style: italic; color: var(--rust); font-weight: 400; }
+  .proof-attribution {
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+  .proof-avatar {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: var(--navy);
+    color: var(--amber-bright);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--sans);
+    font-style: italic;
+    font-size: 20px;
+    font-variation-settings: "opsz" 144;
+  }
+  .proof-name { font-weight: 600; color: var(--navy); }
+  .proof-role { font-size: 13px; color: var(--muted); margin-top: 2px; }
+  .proof-stat-card {
+    background: var(--navy);
+    color: var(--cream);
+    padding: 56px 48px;
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+  }
+  .proof-stat-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -30%;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, var(--amber) 0%, transparent 70%);
+    opacity: 0.18;
+    border-radius: 50%;
+  }
+  .proof-stat-label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--amber-bright);
+    margin-bottom: 24px;
+    position: relative;
+  }
+  .proof-stat-num {
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: clamp(72px, 9vw, 120px);
+    line-height: 0.9;
+    color: var(--cream);
+    margin-bottom: 24px;
+    letter-spacing: -0.04em;
+    position: relative;
+    font-variation-settings: "opsz" 144;
+  }
+  .proof-stat-num span { color: var(--amber-bright); }
+  .proof-stat-desc {
+    font-size: 15px;
+    line-height: 1.6;
+    color: rgba(244,239,230,0.75);
+    margin-bottom: 32px;
+    position: relative;
+  }
+  .proof-stat-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--amber-bright);
+    border-bottom: 1px solid var(--amber-bright);
+    padding-bottom: 4px;
+    position: relative;
+    transition: gap 0.3s ease;
+  }
+  .proof-stat-link:hover { gap: 16px; }
+  @media (max-width: 960px) {
+    .proof-grid { grid-template-columns: 1fr; gap: 40px; }
+  }
+
+  /* Other services */
+  .other-svc {
+    background: var(--cream);
+    padding: 110px 0;
+  }
+  .other-svc-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 48px;
+  }
+  .other-svc-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 40px 36px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+  }
+  .other-svc-card:hover {
+    background: var(--navy);
+    color: var(--cream);
+    transform: translateY(-4px);
+  }
+  .other-svc-card .num {
+    font-family: var(--sans);
+    font-style: italic;
+    color: var(--amber);
+    font-size: 14px;
+    margin-bottom: 16px;
+  }
+  .other-svc-card:hover .num { color: var(--amber-bright); }
+  .other-svc-card h4 {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 1.15;
+    margin-bottom: 12px;
+    letter-spacing: -0.01em;
+    color: var(--navy);
+    transition: color 0.3s;
+    font-variation-settings: "opsz" 144;
+  }
+  .other-svc-card:hover h4 { color: var(--cream); }
+  .other-svc-card p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--navy-soft);
+    margin-bottom: 20px;
+    flex: 1;
+    transition: color 0.3s;
+  }
+  .other-svc-card:hover p { color: rgba(244,239,230,0.75); }
+  .other-svc-card .lnk {
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--navy);
+    transition: color 0.3s;
+  }
+  .other-svc-card:hover .lnk { color: var(--amber-bright); }
+  @media (max-width: 768px) {
+    .other-svc-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div class="container">
+    <div class="top-bar-left">
+      <span class="top-bar-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+        <a href="tel:+919676889797">+91 9676 889 797</a>
+      </span>
+      <span class="top-bar-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <a href="mailto:vpatel@proteamadvisory.com">vpatel@proteamadvisory.com</a>
+      </span>
+    </div>
+    <div class="top-bar-right">
+      <span class="top-bar-item">Hyderabad · Serving Global Enterprises</span>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="container nav">
+    <a href="index.html" class="logo">proteam</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="services.html" class="active">Services</a></li>
+      <li><a href="case-studies.html">Case Studies</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <a href="contact.html" class="nav-cta">Free Consultation</a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+  </div>
+</header>
+<!-- MOBILE NAV -->
+<nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+  <ul class="mobile-nav-links">
+    <li><a href="index.html" >Home <span>→</span></a></li>
+    <li><a href="about.html" >About <span>→</span></a></li>
+    <li><a href="services.html" class="active">Services <span>→</span></a></li>
+    <li><a href="case-studies.html" >Case Studies <span>→</span></a></li>
+    <li><a href="contact.html" >Contact <span>→</span></a></li>
+  </ul>
+  <a href="contact.html" class="mobile-nav-cta">Book Free Consultation →</a>
+  <div class="mobile-nav-contact">
+    <a href="tel:+919676889797">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+      +91 9676 889 797
+    </a>
+    <a href="mailto:vpatel@proteamadvisory.com">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      vpatel@proteamadvisory.com
+    </a>
+  </div>
+</nav>
+
+
+<!-- PAGE HERO -->
+<section class="page-hero svc-detail-hero">
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a>
+      <span class="sep">/</span>
+      <a href="services.html">Services</a>
+      <span class="sep">/</span>
+      <span class="current">Licence Optimisation</span>
+    </div>
+    <div class="page-hero-grid">
+      <div>
+        <div class="page-hero-eyebrow">Service 01</div>
+        <h1>Licence <em>optimisation</em> services.</h1>
+      </div>
+      <p class="page-hero-lede">
+        Cut annual software spend by 15–20% — beyond what your team has already negotiated. We turn your licence estate into a leaner version of itself.
+      </p>
+    </div>
+
+    <div class="stat-row reveal">
+      <div>
+        <div class="stat-num">15–20%</div>
+        <div class="stat-lbl">Average annual cost reduction across our optimisation engagements.</div>
+      </div>
+      <div>
+        <div class="stat-num">$100M+</div>
+        <div class="stat-lbl">Largest single-engagement saving — IBM ECM optimisation, US Fortune 500 client.</div>
+      </div>
+      <div>
+        <div class="stat-num">30+</div>
+        <div class="stat-lbl">Software vendors covered — IBM, Oracle, SAP, Microsoft, Adobe, Autodesk and more.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OVERVIEW -->
+<section class="svc-overview">
+  <div class="container">
+    <div class="svc-overview-grid">
+      <div class="reveal">
+        <div class="section-eyebrow">The problem we solve</div>
+        <h2>You're paying for licences <em>you don't use</em>. Probably more than you think.</h2>
+      </div>
+      <div class="reveal">
+        <p>The typical enterprise software estate accumulates waste in three forms: <strong>over-deployment</strong> (paying for capacity you don't consume), <strong>over-licensing</strong> (buying tier or edition levels above what you need), and <strong>over-renewal</strong> (rolling forward agreements that no longer fit how you operate).</p>
+        <p>Across 4,000+ optimisation reviews, we've found that 15–20% of annual software spend can typically be reclaimed without disrupting any active business process. We've found cases where the figure was significantly higher — but 15–20% is the conservative baseline.</p>
+        <p>Our job is to find that money, structure how to unlock it, and design how to keep it from reappearing year after year. <strong>We work to find savings — not to recommend more software.</strong></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT'S INCLUDED -->
+<section class="includes">
+  <div class="container">
+    <div class="reveal" style="max-width: 720px;">
+      <div class="section-eyebrow">What's included</div>
+      <h2 class="section-title">Six work-streams. <em>One outcome.</em></h2>
+      <p class="section-lede">Every licence optimisation engagement covers these areas — adapted in scale and depth to your environment, contracts, and timeline.</p>
+    </div>
+
+    <div class="includes-grid reveal-stagger">
+      <div class="includes-item">
+        <div class="num">— 01</div>
+        <h4>Contract & entitlement analysis</h4>
+        <p>Forensic review of every active software agreement. We unpack the metrics, restrictions, swap rights, and historical amendments — building an accurate picture of what you're actually entitled to.</p>
+      </div>
+      <div class="includes-item">
+        <div class="num">— 02</div>
+        <h4>Deployment & consumption analysis</h4>
+        <p>Reconcile what's been deployed against what's been entitled. We use your existing SAM tooling — Flexera, ServiceNow, Snow, USU, Aspera — and supplement with custom analysis where needed.</p>
+      </div>
+      <div class="includes-item">
+        <div class="num">— 03</div>
+        <h4>Waste identification</h4>
+        <p>Unused entitlements, over-licensed users, dormant deployments, redundant tiers, edition mismatches, and configuration-driven cost leakage — all surfaced and quantified.</p>
+      </div>
+      <div class="includes-item">
+        <div class="num">— 04</div>
+        <h4>Optimisation roadmap</h4>
+        <p>Prioritised, sequenced plan to capture the savings. Each item has a defined owner, timeline, dependency map, and dollar figure attached. No vague recommendations.</p>
+      </div>
+      <div class="includes-item">
+        <div class="num">— 05</div>
+        <h4>Renegotiation support</h4>
+        <p>When the path to savings runs through the vendor, we sit at the table with you. We brief your negotiation team, draft counter-positions, and where helpful, engage directly with vendor account managers.</p>
+      </div>
+      <div class="includes-item">
+        <div class="num">— 06</div>
+        <h4>Sustainability framework</h4>
+        <p>Saved once doesn't mean saved forever. We hand over governance processes, monitoring routines, and renewal calendars that keep the savings recurring year on year.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="svc-process">
+  <div class="container">
+    <div class="reveal" style="max-width: 720px;">
+      <div class="section-eyebrow">How we work</div>
+      <h2 class="section-title">A four-stage delivery model. <em>Outcome-anchored.</em></h2>
+      <p class="section-lede">Engagements typically run 8–16 weeks for an initial optimisation programme, with optional managed services to follow.</p>
+    </div>
+
+    <div class="svc-steps reveal-stagger">
+      <div class="svc-step">
+        <div class="num">01</div>
+        <h4>Discover & scope</h4>
+        <p>Free no-obligation consultation. We agree on scope, vendors in focus, success metrics, and timeline. You'll know exactly what's covered before any contract is signed.</p>
+      </div>
+      <div class="svc-step">
+        <div class="num">02</div>
+        <h4>Analyse & quantify</h4>
+        <p>Deep-dive analysis of contracts, deployment data, consumption reports, and renewal cycles. By the end of this phase, we know the savings number — to a defensible level of accuracy.</p>
+      </div>
+      <div class="svc-step">
+        <div class="num">03</div>
+        <h4>Capture & negotiate</h4>
+        <p>Execution. License harvesting, contract restructuring, vendor renegotiation, deployment right-sizing — whatever's needed to convert the identified savings into bottom-line dollars.</p>
+      </div>
+      <div class="svc-step">
+        <div class="num">04</div>
+        <h4>Sustain & report</h4>
+        <p>Hand-over of the operating model. Optional managed services keep your environment optimised continuously and report monthly on emerging risks and new optimisation opportunities.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROOF -->
+<section class="proof">
+  <div class="container">
+    <div class="reveal" style="margin-bottom: 56px;">
+      <div class="section-eyebrow">Proof</div>
+      <h2 class="section-title">A <em>recent engagement</em>.</h2>
+    </div>
+    <div class="proof-grid">
+      <div class="reveal">
+        <div class="proof-quote">
+          "Within four months, our licence optimisation experts helped them <em>save over $100 million</em> across a complex IBM ECM estate that had defeated their internal team for two years."
+        </div>
+        <div class="proof-attribution">
+          <div class="proof-avatar">PT</div>
+          <div>
+            <div class="proof-name">Engagement Lead</div>
+            <div class="proof-role">Proteam Advisory · IBM ECM optimisation</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="proof-stat-card reveal">
+        <div class="proof-stat-label">Total client savings</div>
+        <div class="proof-stat-num"><span>$100M+</span></div>
+        <div class="proof-stat-desc">A US Fortune 500 client engaged us after a 2-year internal effort to resolve IBM ECM departmental restrictions had stalled. We optimised the estate in 4 months.</div>
+        <a href="case-studies.html" class="proof-stat-link">Read full case study →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OTHER SERVICES -->
+<section class="other-svc">
+  <div class="container">
+    <div class="reveal" style="max-width: 720px;">
+      <div class="section-eyebrow">Adjacent services</div>
+      <h2 class="section-title">Often deployed <em>alongside</em>.</h2>
+      <p class="section-lede">Licence optimisation rarely stands alone. Most clients engage one of these complementary services as part of the same programme.</p>
+    </div>
+
+    <div class="other-svc-grid">
+      <a href="service-audit-defence.html" class="other-svc-card reveal">
+        <div class="num">— 02</div>
+        <h4>Audit Defence</h4>
+        <p>If a vendor audit is on the horizon — or already on your desk — we defend it. We've slashed audit exposure by tens of millions for clients across IBM, Oracle, Microsoft, and SAP.</p>
+        <span class="lnk">Learn more <svg width="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+      </a>
+      <a href="service-sam-baselining.html" class="other-svc-card reveal">
+        <div class="num">— 03</div>
+        <h4>SAM Baselining & Managed Services</h4>
+        <p>Once optimised, your estate needs ongoing governance. Our managed SAM service keeps you continuously compliant, continuously optimising, with monthly reporting.</p>
+        <span class="lnk">Learn more <svg width="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="container">
+    <div class="cta-inner">
+      <div class="reveal">
+        <div class="section-eyebrow" style="color: var(--amber-bright);">Ready to talk</div>
+        <h2>Want to know <em>where your money is hiding</em>?</h2>
+        <p>The free SAM consultation is exactly that. A senior consultant will spend 30 minutes with you understanding your estate, vendor exposure, and renewal cycle — and walk away with an estimate of how much savings is on the table.</p>
+        <div class="cta-actions">
+          <a href="contact.html" class="btn-amber">Book free consultation</a>
+          <a href="case-studies.html" class="btn-line">See more case studies</a>
+        </div>
+      </div>
+      <div class="cta-detail reveal">
+        <h4>What you'll get</h4>
+        <ul class="cta-list">
+          <li>30-minute call with a senior optimisation specialist.</li>
+          <li>Vendor-by-vendor view of where waste typically hides.</li>
+          <li>Estimated savings range based on similar enterprises.</li>
+          <li>Honest assessment of whether you need our help at all.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a href="index.html" class="logo" style="color: var(--cream);">proteam</a>
+        <h3>SAM specialists. Nothing else.</h3>
+        <p>An independent Software Asset Management consultancy serving enterprises across India, the UK, the US, and the Middle East.</p>
+
+        <div class="foot-social">
+          <div class="foot-social-label">Follow us on</div>
+          <div class="foot-social-icons">
+            <a href="#" aria-label="LinkedIn" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+            <a href="#" aria-label="X (Twitter)" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.53 3H21l-7.39 8.45L22.5 21h-6.83l-5.34-6.99L3.5 21H0l7.91-9.04L0.5 3h7l4.83 6.4L17.53 3zm-2.39 16h2.06L7.05 4.85H4.83L15.14 19z"/></svg>
+            </a>
+            <a href="#" aria-label="Instagram" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+            <a href="#" aria-label="YouTube" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="currentColor"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="foot-col">
+        <h5>Services</h5>
+        <ul>
+          <li><a href="service-license-optimization.html">Licence Optimisation</a></li>
+          <li><a href="service-audit-defence.html">Audit Defence</a></li>
+          <li><a href="service-sam-baselining.html">SAM Baselining</a></li>
+          <li><a href="service-ai-spend.html">AI Spend Management</a></li>
+          <li><a href="service-ai-adoption.html">AI Adoption &amp; Value</a></li>
+          <li><a href="service-saas-management.html">SaaS Management</a></li>
+          <li><a href="service-cloud-finops.html">Cloud FinOps</a></li>
+          <li><a href="services.html">All Services</a></li>
+        </ul>
+      </div>
+
+      <div class="foot-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="about.html">About</a></li>
+          <li><a href="case-studies.html">Case Studies</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="insights.html">Insights</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="careers.html">Careers</a></li>
+        </ul>
+      </div>
+
+      <div class="foot-col">
+        <h5>Get in touch</h5>
+        <address>
+          Suite #309&ndash;312<br>
+          KTC Illumination Towers<br>
+          Madhapur, Hyderabad<br>
+          Telangana, India<br><br>
+          <a href="tel:+919676889797">+91 9676 889 797</a><br>
+          <a href="mailto:vpatel@proteamadvisory.com">vpatel@proteamadvisory.com</a>
+        </address>
+      </div>
+    </div>
+
+    <div class="foot-bot">
+      <div>&copy; 2026 Proteam Advisory. All rights reserved.</div>
+      <div style="display:flex; gap:24px; flex-wrap:wrap;">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Cookies</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ---- Scroll reveal ----
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add("in"); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+  document.querySelectorAll(".reveal, .reveal-stagger").forEach(el => obs.observe(el));
+
+  // ---- Smooth scroll ----
+  document.querySelectorAll("a[href^='#']").forEach(link => {
+    link.addEventListener("click", e => {
+      const id = link.getAttribute("href");
+      if (id.length > 1) { const tgt = document.querySelector(id); if (tgt) { e.preventDefault(); tgt.scrollIntoView({ behavior: "smooth", block: "start" }); } }
+    });
+  });
+
+  // ---- Mobile menu ----
+  const toggle = document.getElementById("menuToggle");
+  const mobileNav = document.getElementById("mobileNav");
+  function openMenu() {
+    mobileNav.style.display = "flex";
+    requestAnimationFrame(() => mobileNav.classList.add("is-open"));
+    toggle.classList.add("open");
+    toggle.setAttribute("aria-expanded", "true");
+    document.body.style.overflow = "hidden";
+  }
+  function closeMenu() {
+    mobileNav.classList.remove("is-open");
+    toggle.classList.remove("open");
+    toggle.setAttribute("aria-expanded", "false");
+    document.body.style.overflow = "";
+    setTimeout(() => { if (!mobileNav.classList.contains("is-open")) mobileNav.style.display = "none"; }, 350);
+  }
+  toggle.addEventListener("click", () => mobileNav.classList.contains("is-open") ? closeMenu() : openMenu());
+  mobileNav.querySelectorAll("a").forEach(link => link.addEventListener("click", closeMenu));
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && mobileNav.classList.contains("is-open")) closeMenu(); });
+</script>
+</body>
+</html>

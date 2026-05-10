@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Insights — Proteam Advisory</title>
+<meta name="description" content="Sharp takes on software economics, vendor playbooks, and live case scenarios from across our 4,000+ licensing reviews." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+
+<style>
+
+  .insights-list { background: var(--paper); padding: 60px 0 110px; }
+  .insights-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 56px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--line);
+  }
+  .insights-filter {
+    padding: 8px 18px;
+    border: 1px solid var(--line);
+    background: #fff;
+    border-radius: 999px;
+    font-size: 13px;
+    color: var(--navy-soft);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+    font-family: var(--sans);
+  }
+  .insights-filter:hover { border-color: var(--navy); color: var(--navy); }
+  .insights-filter.active { background: var(--navy); color: var(--cream); border-color: var(--navy); }
+
+  .featured-insight {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 56px;
+    align-items: center;
+    background: var(--navy);
+    color: var(--cream);
+    border-radius: var(--radius);
+    padding: 56px;
+    margin-bottom: 64px;
+    position: relative;
+    overflow: hidden;
+  }
+  .featured-insight::before {
+    content: '';
+    position: absolute;
+    top: -120px; right: -120px;
+    width: 360px; height: 360px;
+    background: radial-gradient(circle, rgba(200,147,43,0.22) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .featured-insight > * { position: relative; z-index: 1; }
+  .featured-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 24px;
+    font-weight: 500;
+  }
+  .featured-tag::before { content: ''; width: 32px; height: 1px; background: var(--amber); }
+  .featured-insight h2 {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: clamp(34px, 4vw, 52px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+    font-variation-settings: "opsz" 144;
+  }
+  .featured-insight h2 em { font-family: var(--serif); font-variation-settings: "opsz" 144; font-style: italic; color: var(--amber); font-weight: 300; }
+  .featured-insight p {
+    font-size: 17px;
+    line-height: 1.65;
+    color: rgba(244,239,230,0.8);
+    margin-bottom: 32px;
+  }
+  .featured-meta {
+    display: flex;
+    gap: 18px;
+    font-size: 12px;
+    color: rgba(244,239,230,0.5);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+  .featured-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 28px;
+    background: var(--amber);
+    color: var(--navy);
+    border-radius: var(--radius);
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+  .featured-cta:hover { background: var(--amber-bright); transform: translateY(-1px); }
+  .featured-visual {
+    aspect-ratio: 4/3;
+    background: linear-gradient(135deg, rgba(200,147,43,0.15), rgba(184,92,56,0.1));
+    border: 1px solid rgba(244,239,230,0.15);
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .featured-visual::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle at 1px 1px, rgba(244,239,230,0.1) 1px, transparent 0);
+    background-size: 24px 24px;
+  }
+  .featured-visual-num {
+    font-family: var(--sans);
+    font-size: clamp(72px, 9vw, 132px);
+    font-weight: 200;
+    color: var(--amber);
+    line-height: 1;
+    font-variation-settings: "opsz" 144;
+    position: relative;
+    z-index: 1;
+  }
+  .featured-visual-label {
+    position: absolute;
+    bottom: 28px;
+    left: 28px;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(244,239,230,0.6);
+  }
+
+  .insights-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+  }
+  .insight-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 36px;
+    text-decoration: none;
+    color: var(--navy);
+    transition: all 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+  }
+  .insight-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--amber);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .insight-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 24px 60px -20px rgba(11,31,58,0.18);
+    border-color: var(--navy);
+  }
+  .insight-card:hover::before { transform: scaleX(1); }
+  .insight-meta {
+    display: flex;
+    gap: 14px;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+  .insight-meta .tag {
+    color: var(--amber);
+    font-weight: 600;
+  }
+  .insight-card h3 {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: 26px;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: var(--navy);
+    margin-bottom: 16px;
+    font-variation-settings: "opsz" 36;
+  }
+  .insight-card h3 em { font-family: var(--serif); font-variation-settings: "opsz" 144; font-style: italic; color: var(--rust); font-weight: 300; }
+  .insight-card p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--navy-soft);
+    margin-bottom: 24px;
+    flex: 1;
+  }
+  .insight-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--rust);
+    margin-top: auto;
+  }
+  .insight-link svg { width: 14px; height: 14px; transition: transform 0.25s ease; }
+  .insight-card:hover .insight-link svg { transform: translateX(4px); }
+
+  .newsletter-cta {
+    margin-top: 80px;
+    padding: 48px 56px;
+    background: var(--cream);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    align-items: center;
+  }
+  .newsletter-cta h3 {
+    font-family: var(--sans);
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--navy);
+    margin-bottom: 12px;
+    font-variation-settings: "opsz" 36;
+  }
+  .newsletter-cta h3 em { font-family: var(--serif); font-variation-settings: "opsz" 144; font-style: italic; color: var(--rust); }
+  .newsletter-cta p { color: var(--navy-soft); font-size: 15px; line-height: 1.6; }
+  .newsletter-form {
+    display: flex;
+    border: 1px solid var(--line);
+    background: #fff;
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .newsletter-form:focus-within { border-color: var(--navy); }
+  .newsletter-form input {
+    flex: 1;
+    border: none;
+    padding: 16px 20px;
+    font-family: var(--sans);
+    font-size: 14px;
+    color: var(--navy);
+    outline: none;
+  }
+  .newsletter-form button {
+    padding: 0 26px;
+    background: var(--navy);
+    color: var(--cream);
+    border: none;
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  .newsletter-form button:hover { background: var(--navy-soft); }
+
+  @media (max-width: 900px) {
+    .featured-insight { grid-template-columns: 1fr; padding: 36px 28px; gap: 32px; }
+    .insights-grid { grid-template-columns: 1fr; gap: 20px; }
+    .insight-card { padding: 28px; }
+    .newsletter-cta { grid-template-columns: 1fr; gap: 24px; padding: 32px 24px; }
+  }
+
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div class="container">
+    <div class="top-bar-left">
+      <span class="top-bar-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+        <a href="tel:+919676889797">+91 9676 889 797</a>
+      </span>
+      <span class="top-bar-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <a href="mailto:vpatel@proteamadvisory.com">vpatel@proteamadvisory.com</a>
+      </span>
+    </div>
+    <div class="top-bar-right">
+      <span class="top-bar-item">Hyderabad · Serving Global Enterprises</span>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="container nav">
+    <a href="index.html" class="logo">proteam</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="case-studies.html">Case Studies</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <a href="contact.html" class="nav-cta">Free Consultation</a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">
+      <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+    </button>
+  </div>
+</header>
+<!-- MOBILE NAV -->
+<nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+  <ul class="mobile-nav-links">
+    <li><a href="index.html">Home <span>&rarr;</span></a></li>
+    <li><a href="about.html">About <span>&rarr;</span></a></li>
+    <li><a href="services.html">Services <span>&rarr;</span></a></li>
+    <li><a href="case-studies.html">Case Studies <span>&rarr;</span></a></li>
+    <li><a href="contact.html">Contact <span>&rarr;</span></a></li>
+  </ul>
+  <a href="contact.html" class="mobile-nav-cta">Book Free Consultation &rarr;</a>
+  <div class="mobile-nav-contact">
+    <a href="tel:+919676889797"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>+91 9676 889 797</a>
+    <a href="mailto:vpatel@proteamadvisory.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>vpatel@proteamadvisory.com</a>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a>
+      <span class="sep">/</span>
+      <span class="current">Insights</span>
+    </div>
+    <div class="page-hero-grid">
+      <div>
+        <div class="page-hero-eyebrow">Insights &amp; Industry Intelligence</div>
+        <h1>Sharp takes on <em>software economics</em>.</h1>
+      </div>
+      <p class="page-hero-lede">
+        Field notes, vendor playbooks, and live case scenarios from across our 4,000+ licensing reviews. Written by practitioners who do this every day.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- INSIGHTS LIST -->
+<section class="insights-list">
+  <div class="container">
+
+    <!-- Topic filters (visual only — wire up when needed) -->
+    <div class="insights-controls">
+      <span class="insights-filter active">All topics</span>
+      <span class="insights-filter">Vendor playbooks</span>
+      <span class="insights-filter">Audit defence</span>
+      <span class="insights-filter">Cloud &amp; FinOps</span>
+      <span class="insights-filter">AI &amp; Copilot</span>
+      <span class="insights-filter">SaaS Management</span>
+      <span class="insights-filter">Case scenarios</span>
+    </div>
+
+    <!-- FEATURED ARTICLE -->
+    <a href="article-oracle-java.html" class="featured-insight" style="text-decoration:none;">
+      <div>
+        <div class="featured-tag">Featured · Vendor Playbook</div>
+        <h2>The Oracle Java SE reset: what every <em>finance team</em> should ask before April renewals.</h2>
+        <p>Three years into Oracle's per-employee Java licensing shift, the second-wave true-ups are landing on enterprise desks. We break down the four contract clauses driving most of the surprise spend — and the negotiation moves that have worked across our last 40 client engagements.</p>
+        <div class="featured-meta">
+          <span>15 March 2026</span>
+          <span>·</span>
+          <span>9 min read</span>
+        </div>
+        <span class="featured-cta">
+          Read the full analysis
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </span>
+      </div>
+      <div class="featured-visual">
+        <div class="featured-visual-num">62<span style="font-size:0.45em;vertical-align:0.55em;">%</span></div>
+        <div class="featured-visual-label">Average reduction · Java SE renegotiations · 2025–26</div>
+      </div>
+    </a>
+
+    <!-- ARTICLE GRID -->
+    <!--
+      To add a new article, copy any <a class="insight-card"> block below and update:
+      1. The tag (vendor / case scenario / audit defence etc.)
+      2. The date
+      3. The headline (use <em></em> for the italic emphasis word)
+      4. The 2-3 line excerpt
+      5. The href to point to the full article page when written
+    -->
+    <div class="insights-grid">
+
+      <a href="article-microsoft365-pharma.html" class="insight-card">
+        <div class="insight-meta">
+          <span class="tag">Case Scenario</span>
+          <span>02 March 2026</span>
+          <span>·</span>
+          <span>6 min read</span>
+        </div>
+        <h3>How a global pharma client cut Microsoft 365 spend by <em>34%</em> without losing a single user.</h3>
+        <p>An E5-to-E3 rebalance, a reclaim of 2,800 dormant licences, and a renegotiated Frontline tier — without touching power-user productivity. The exact decision tree we used.</p>
+        <span class="insight-link">
+          Read the case
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </span>
+      </a>
+
+      <a href="article-copilot-shelfware.html" class="insight-card">
+        <div class="insight-meta">
+          <span class="tag">AI &amp; Copilot</span>
+          <span>21 February 2026</span>
+          <span>·</span>
+          <span>7 min read</span>
+        </div>
+        <h3>The Copilot sprawl pattern nobody is talking about: <em>shelfware at scale</em>.</h3>
+        <p>From 18 client deployments, fewer than 1 in 3 Copilot seats see weekly active use after month four. Here&rsquo;s the deployment governance pattern that flips that ratio.</p>
+        <span class="insight-link">
+          Read the analysis
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </span>
+      </a>
+
+      <a href="article-sap-indirect-access.html" class="insight-card">
+        <div class="insight-meta">
+          <span class="tag">Audit Defence</span>
+          <span>11 February 2026</span>
+          <span>·</span>
+          <span>8 min read</span>
+        </div>
+        <h3>SAP&rsquo;s indirect access audits are quietly ramping again. <em>Here&rsquo;s what changed.</em></h3>
+        <p>Two new clauses in the 2026 GTC have shifted the burden of proof on indirect use. We map the audit triggers, the documentation gaps that get exploited, and a 30-day baseline plan.</p>
+        <span class="insight-link">
+          Read the playbook
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </span>
+      </a>
+
+      <a href="article-aws-savings-plans.html" class="insight-card">
+        <div class="insight-meta">
+          <span class="tag">Cloud &amp; FinOps</span>
+          <span>30 January 2026</span>
+          <span>·</span>
+          <span>5 min read</span>
+        </div>
+        <h3>Why your AWS Savings Plans are leaving <em>18%</em> on the table — and the unit-economics fix.</h3>
+        <p>Most enterprises buy commitment based on last quarter&rsquo;s spend. The math that actually optimises is forward-loaded against workload elasticity. A worked example from a banking client.</p>
+        <span class="insight-link">
+          Read the breakdown
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </span>
+      </a>
+
+      <a href="article-shadow-ai-inventory.html" class="insight-card">
+        <div class="insight-meta">
+          <span class="tag">SaaS Management</span>
+          <span>14 January 2026</span>
+          <span>·</span>
+          <span>6 min read</span>
+        </div>
+        <h3>The Shadow AI inventory: a <em>2026 audit playbook</em> for CIOs.</h3>
+        <p>Browser-based AI tools, departmental Cursor seats, embedded agent licences inside SaaS contracts you already own. A four-step discovery sweep that takes a week and finds 2&ndash;3x what your CASB sees.</p>
+        <span class="insight-link">
+          Read the playbook
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </span>
+      </a>
+
+      <!--
+        FUTURE ARTICLES GO HERE
+        Just copy any <a class="insight-card"> block above and update the content.
+        The grid auto-flows — it works at 6, 8, 12, 24 articles without breaking.
+      -->
+
+    </div>
+
+    <!-- NEWSLETTER CAPTURE -->
+    <div class="newsletter-cta">
+      <div>
+        <h3>Subscribe to <em>Practitioner&rsquo;s Note</em>.</h3>
+        <p>One email a fortnight. Vendor moves, contract clauses worth knowing about, and one practical playbook each issue. No fluff.</p>
+      </div>
+      <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Connect this to Mailchimp / HubSpot / your email provider.');">
+        <input type="email" placeholder="your@workemail.com" required>
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- FOOTER (will be replaced by the standard footer when zipped — using consistent block from script) -->
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a href="index.html" class="logo" style="color: var(--cream);">proteam</a>
+        <h3>SAM specialists. Nothing else.</h3>
+        <p>An independent Software Asset Management consultancy serving enterprises across India, the UK, the US, and the Middle East.</p>
+        <div class="foot-social">
+          <div class="foot-social-label">Follow us on</div>
+          <div class="foot-social-icons">
+            <a href="#" aria-label="LinkedIn" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+            <a href="#" aria-label="X (Twitter)" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.53 3H21l-7.39 8.45L22.5 21h-6.83l-5.34-6.99L3.5 21H0l7.91-9.04L0.5 3h7l4.83 6.4L17.53 3zm-2.39 16h2.06L7.05 4.85H4.83L15.14 19z"/></svg></a>
+            <a href="#" aria-label="Instagram" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+            <a href="#" aria-label="YouTube" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="currentColor"/></svg></a>
+          </div>
+        </div>
+      </div>
+      <div class="foot-col">
+        <h5>Services</h5>
+        <ul>
+          <li><a href="service-license-optimization.html">Licence Optimisation</a></li>
+          <li><a href="service-audit-defence.html">Audit Defence</a></li>
+          <li><a href="service-sam-baselining.html">SAM Baselining</a></li>
+          <li><a href="service-ai-spend.html">AI Spend Management</a></li>
+          <li><a href="service-ai-adoption.html">AI Adoption &amp; Value</a></li>
+          <li><a href="service-saas-management.html">SaaS Management</a></li>
+          <li><a href="service-cloud-finops.html">Cloud FinOps</a></li>
+          <li><a href="services.html">All Services</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="about.html">About</a></li>
+          <li><a href="case-studies.html">Case Studies</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="insights.html">Insights</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="careers.html">Careers</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5>Get in touch</h5>
+        <address>
+          Suite #309&ndash;312<br>
+          KTC Illumination Towers<br>
+          Madhapur, Hyderabad<br>
+          Telangana, India<br><br>
+          <a href="tel:+919676889797">+91 9676 889 797</a><br>
+          <a href="mailto:vpatel@proteamadvisory.com">vpatel@proteamadvisory.com</a>
+        </address>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <div>&copy; 2026 Proteam Advisory. All rights reserved.</div>
+      <div style="display:flex; gap:24px; flex-wrap:wrap;">
+        <a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function() {
+  const toggle = document.getElementById("menuToggle");
+  const mobileNav = document.getElementById("mobileNav");
+  function openMenu() {
+    mobileNav.style.display = "flex";
+    requestAnimationFrame(() => mobileNav.classList.add("is-open"));
+    toggle.classList.add("is-active");
+    toggle.setAttribute("aria-expanded", "true");
+    document.body.style.overflow = "hidden";
+  }
+  function closeMenu() {
+    mobileNav.classList.remove("is-open");
+    toggle.classList.remove("is-active");
+    toggle.setAttribute("aria-expanded", "false");
+    document.body.style.overflow = "";
+    setTimeout(() => { if (!mobileNav.classList.contains("is-open")) mobileNav.style.display = "none"; }, 300);
+  }
+  toggle.addEventListener("click", () => {
+    if (mobileNav.classList.contains("is-open")) closeMenu(); else openMenu();
+  });
+  document.querySelectorAll(".mobile-nav-links a, .mobile-nav-cta").forEach(a => {
+    a.addEventListener("click", closeMenu);
+  });
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape" && mobileNav.classList.contains("is-open")) closeMenu();
+  });
+})();
+</script>
+</body>
+</html>

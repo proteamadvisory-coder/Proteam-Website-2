@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>About — Proteam Advisory</title>
+<meta name="description" content="An independent Software Asset Management consultancy. SAM specialists, not generalists. Trusted by 500+ enterprises worldwide." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+
+<style>
+  /* ABOUT-PAGE-SPECIFIC */
+  .story {
+    background: var(--paper);
+    padding: 110px 0;
+  }
+  .story-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 100px;
+    align-items: start;
+  }
+  .story-aside {
+    position: sticky;
+    top: 110px;
+  }
+  .story-aside .label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--amber);
+    font-weight: 600;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--line);
+    display: block;
+  }
+  .story-aside h2 {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: clamp(36px, 4vw, 52px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--navy);
+    font-variation-settings: "opsz" 144;
+  }
+  .story-aside h2 em { font-family: var(--serif); font-variation-settings: "opsz" 144; font-style: italic; color: var(--rust); font-weight: 300; }
+  .story-aside .pull-quote {
+    font-family: var(--sans);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 22px;
+    line-height: 1.4;
+    color: var(--navy-soft);
+    border-left: 3px solid var(--amber);
+    padding: 0 0 0 24px;
+    margin-top: 32px;
+    font-variation-settings: "opsz" 144;
+  }
+
+  .story-body p {
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--navy-soft);
+    margin-bottom: 24px;
+  }
+  .story-body p strong {
+    color: var(--navy);
+    font-weight: 600;
+  }
+  .story-body p:first-child::first-letter {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: 80px;
+    line-height: 0.85;
+    float: left;
+    color: var(--rust);
+    margin: 6px 12px 0 0;
+    font-variation-settings: "opsz" 144;
+  }
+  .story-divider {
+    border: none;
+    height: 1px;
+    background: var(--line);
+    margin: 40px 0;
+  }
+
+  @media (max-width: 960px) {
+    .story-grid { grid-template-columns: 1fr; gap: 50px; }
+    .story-aside { position: static; }
+  }
+
+  /* PRINCIPLES */
+  .principles {
+    background: var(--cream);
+    padding: 110px 0;
+  }
+  .principles-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    margin-bottom: 64px;
+    gap: 60px;
+  }
+  .principles-head .copy { max-width: 620px; }
+  .principles-head .num-tag {
+    font-family: var(--sans);
+    font-style: italic;
+    font-size: 14px;
+    color: var(--amber);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    flex-shrink: 0;
+  }
+  .principles-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+  .principle {
+    background: var(--cream);
+    padding: 48px 40px;
+    transition: background 0.3s ease;
+  }
+  .principle:hover { background: var(--paper); }
+  .principle-num {
+    font-family: var(--sans);
+    font-style: italic;
+    font-size: 16px;
+    color: var(--amber);
+    margin-bottom: 16px;
+    font-weight: 400;
+  }
+  .principle h4 {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 26px;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    color: var(--navy);
+    margin-bottom: 12px;
+    font-variation-settings: "opsz" 144;
+  }
+  .principle p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--navy-soft);
+  }
+  @media (max-width: 768px) {
+    .principles-grid { grid-template-columns: 1fr; }
+    .principles-head { flex-direction: column; align-items: flex-start; gap: 16px; }
+  }
+
+  /* TIMELINE / DIFFERENTIATORS */
+  .differentiators {
+    background: var(--navy);
+    color: var(--cream);
+    padding: 120px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .differentiators::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+  .differentiators .container { position: relative; }
+  .differentiators .section-title { color: var(--cream); }
+  .differentiators .section-eyebrow { color: var(--amber-bright); }
+  .differentiators .section-eyebrow::before { background: var(--amber-bright); }
+  .differentiators .section-lede { color: rgba(244,239,230,0.7); }
+
+  .diff-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    margin-top: 64px;
+    background: var(--line-cream);
+    border: 1px solid var(--line-cream);
+  }
+  .diff-card {
+    background: var(--navy);
+    padding: 48px 36px;
+    transition: background 0.3s ease;
+  }
+  .diff-card:hover { background: var(--navy-soft); }
+  .diff-stat {
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 64px;
+    line-height: 1;
+    color: var(--amber-bright);
+    margin-bottom: 20px;
+    letter-spacing: -0.03em;
+    font-variation-settings: "opsz" 144;
+  }
+  .diff-card h4 {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 1.2;
+    color: var(--cream);
+    margin-bottom: 12px;
+    font-variation-settings: "opsz" 144;
+  }
+  .diff-card p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: rgba(244,239,230,0.7);
+  }
+  @media (max-width: 768px) {
+    .diff-grid { grid-template-columns: 1fr; }
+  }
+
+  /* TEAM */
+  .team-section {
+    background: var(--paper);
+    padding: 110px 0;
+  }
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    margin-top: 56px;
+  }
+  .team-card {
+    background: var(--cream);
+    border: 1px solid var(--line);
+    padding: 40px 32px;
+    text-align: center;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+  }
+  .team-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--amber);
+    box-shadow: 0 20px 40px -16px rgba(11,31,58,0.15);
+  }
+  .team-avatar {
+    width: 88px;
+    height: 88px;
+    margin: 0 auto 24px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-soft) 100%);
+    color: var(--amber-bright);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--sans);
+    font-size: 36px;
+    font-style: italic;
+    font-weight: 400;
+    border: 3px solid var(--paper);
+    box-shadow: 0 0 0 1px var(--line);
+    font-variation-settings: "opsz" 144;
+  }
+  .team-card h4 {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 22px;
+    color: var(--navy);
+    margin-bottom: 4px;
+    letter-spacing: -0.01em;
+  }
+  .team-card .role {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+    margin-bottom: 20px;
+  }
+  .team-card .bio {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--navy-soft);
+  }
+  @media (max-width: 768px) {
+    .team-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div class="container">
+    <div class="top-bar-left">
+      <span class="top-bar-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+        <a href="tel:+919676889797">+91 9676 889 797</a>
+      </span>
+      <span class="top-bar-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <a href="mailto:vpatel@proteamadvisory.com">vpatel@proteamadvisory.com</a>
+      </span>
+    </div>
+    <div class="top-bar-right">
+      <span class="top-bar-item">Hyderabad · Serving Global Enterprises</span>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="container nav">
+    <a href="index.html" class="logo">proteam</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="case-studies.html">Case Studies</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <a href="contact.html" class="nav-cta">Free Consultation</a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+  </div>
+</header>
+<!-- MOBILE NAV -->
+<nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+  <ul class="mobile-nav-links">
+    <li><a href="index.html" >Home <span>→</span></a></li>
+    <li><a href="about.html" class="active">About <span>→</span></a></li>
+    <li><a href="services.html" >Services <span>→</span></a></li>
+    <li><a href="case-studies.html" >Case Studies <span>→</span></a></li>
+    <li><a href="contact.html" >Contact <span>→</span></a></li>
+  </ul>
+  <a href="contact.html" class="mobile-nav-cta">Book Free Consultation →</a>
+  <div class="mobile-nav-contact">
+    <a href="tel:+919676889797">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+      +91 9676 889 797
+    </a>
+    <a href="mailto:vpatel@proteamadvisory.com">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      vpatel@proteamadvisory.com
+    </a>
+  </div>
+</nav>
+
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a>
+      <span class="sep">/</span>
+      <span class="current">About</span>
+    </div>
+    <div class="page-hero-grid">
+      <div>
+        <div class="page-hero-eyebrow">About Proteam</div>
+        <h1>Nobody knows <em>SAM</em> like we do.</h1>
+      </div>
+      <p class="page-hero-lede">
+        We're a specialist Software Asset Management firm — built by SAM veterans, focused on a single discipline, and accountable for one thing: outcomes you can take to the CFO.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- STORY -->
+<section class="story">
+  <div class="container">
+    <div class="story-grid">
+      <aside class="story-aside reveal">
+        <span class="label">Our story</span>
+        <h2>SAM is the discipline. <em>Outcomes</em> are the deliverable.</h2>
+        <div class="pull-quote">
+          We don't sell licences. We don't take vendor commissions. We work for you — period.
+        </div>
+      </aside>
+
+      <div class="story-body reveal">
+        <p>
+          Most companies treat software licensing as an admin task — something procurement can handle alongside negotiating coffee contracts. <strong>It isn't.</strong> A single Oracle audit can dwarf a year's procurement savings. A misread IBM contract clause can cost millions. The skills required to optimise software estates and defend audits aren't peripheral to procurement or IT — they are a discipline of their own.
+        </p>
+        <p>
+          That discipline is what we practice. Proteam Advisory was founded by senior consultants who had spent careers at the Big Four and the world's best-known SAM consultancies — and who saw, repeatedly, that enterprises were being underserved. Generalists were running specialist work. Junior staff were being shipped onto complex audits. Vendor influence was creeping into "independent" advisory.
+        </p>
+        <hr class="story-divider">
+        <p>
+          We built Proteam to fix that. <strong>Specialists only.</strong> Every consultant on our team has years of SAM-specific experience, deep familiarity with the major vendors' contract languages, and a track record of measurable savings. When a CFO asks "why are we paying for this engagement?", our consultants can show the answer in numbers.
+        </p>
+        <p>
+          Today we serve over 500 enterprise clients across India, the UK, the US, the Middle East, and continental Europe. We've led more than 4,000 software compliance reviews. Our clients have collectively saved over $1 billion through our work — and we maintain a 100% client satisfaction record across every engagement.
+        </p>
+        <p>
+          We work inside whatever SAM tooling you've already invested in. We're vendor-agnostic but vendor-fluent. We anchor engagements to outcomes, not hours. And we offer a free, no-obligation SAM consultation to anyone serious about understanding their current risk position — because we'd rather show our work than oversell it.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRINCIPLES -->
+<section class="principles">
+  <div class="container">
+    <div class="principles-head reveal">
+      <div class="copy">
+        <div class="section-eyebrow">How we work</div>
+        <h2 class="section-title">Five principles, <em>uncompromised</em>.</h2>
+      </div>
+      <div class="num-tag">— five principles</div>
+    </div>
+
+    <div class="principles-grid reveal-stagger">
+      <div class="principle">
+        <div class="principle-num">— 01</div>
+        <h4>Independent, always</h4>
+        <p>We take no commissions, no kickbacks, and no referral fees from software vendors. The advice we give you is the advice we'd give ourselves. Your interests are the only interests on the table.</p>
+      </div>
+      <div class="principle">
+        <div class="principle-num">— 02</div>
+        <h4>Specialists, not generalists</h4>
+        <p>SAM is all we do. Every team member has held senior positions at the Big Four or other specialist consultancies. No junior bench. No upskilling on your engagement.</p>
+      </div>
+      <div class="principle">
+        <div class="principle-num">— 03</div>
+        <h4>Outcomes over hours</h4>
+        <p>We anchor commercial models to measurable savings and reduced audit exposure — not to time-and-materials. If we don't move the number, we shouldn't get paid for it.</p>
+      </div>
+      <div class="principle">
+        <div class="principle-num">— 04</div>
+        <h4>Tool-flexible</h4>
+        <p>We work inside whatever SAM tooling you've already invested in. No rip-and-replace agendas, no preferred-vendor pressure. We make your existing stack work harder.</p>
+      </div>
+      <div class="principle">
+        <div class="principle-num">— 05</div>
+        <h4>Honest assessment first</h4>
+        <p>Our free SAM consultation isn't a sales call. If we don't think we can save you meaningful money or reduce real risk, we'll tell you so — and recommend what to do instead.</p>
+      </div>
+      <div class="principle">
+        <div class="principle-num">— 06</div>
+        <h4>Confidentiality, contractually</h4>
+        <p>What we see inside your environment stays inside your environment. We treat your contracts, deployment data, and audit history with the seriousness our clients expect.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIFFERENTIATORS -->
+<section class="differentiators">
+  <div class="container">
+    <div class="reveal" style="max-width: 720px; margin-bottom: 40px;">
+      <div class="section-eyebrow">By the numbers</div>
+      <h2 class="section-title">Two decades of <em>SAM-only experience</em>, distilled.</h2>
+      <p class="section-lede">The numbers that matter aren't on a sales deck — they're in the savings clients walk away with.</p>
+    </div>
+
+    <div class="diff-grid reveal-stagger">
+      <div class="diff-card">
+        <div class="diff-stat">$1B+</div>
+        <h4>Savings generated</h4>
+        <p>Cumulative client savings across licence optimisation, audit defence, and managed SAM engagements.</p>
+      </div>
+      <div class="diff-card">
+        <div class="diff-stat">4,000+</div>
+        <h4>Compliance reviews</h4>
+        <p>Software licensing reviews led by our team across every major vendor and every continent.</p>
+      </div>
+      <div class="diff-card">
+        <div class="diff-stat">500+</div>
+        <h4>Enterprise clients</h4>
+        <p>Companies that trust Proteam to defend, optimise, and manage their software licence estate.</p>
+      </div>
+      <div class="diff-card">
+        <div class="diff-stat">30+</div>
+        <h4>Vendors covered</h4>
+        <p>From IBM and Oracle to Autodesk and Red Hat — we speak each vendor's contract language fluently.</p>
+      </div>
+      <div class="diff-card">
+        <div class="diff-stat">15–20%</div>
+        <h4>Average cost cut</h4>
+        <p>Typical reduction in annual software spend — beyond what's already been negotiated by your team.</p>
+      </div>
+      <div class="diff-card">
+        <div class="diff-stat">100%</div>
+        <h4>Client satisfaction</h4>
+        <p>Every engagement, no exceptions. We measure ourselves on whether clients would hire us again.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="team-section">
+  <div class="container">
+    <div class="reveal" style="max-width: 720px;">
+      <div class="section-eyebrow">Leadership</div>
+      <h2 class="section-title">A senior bench. <em>Always.</em></h2>
+      <p class="section-lede">
+        Every Proteam engagement is led by a partner-level consultant with deep vendor expertise. No bait-and-switch from senior pitch to junior delivery.
+      </p>
+    </div>
+
+    <div class="team-grid reveal-stagger">
+      <div class="team-card">
+        <div class="team-avatar">VP</div>
+        <h4>Vash Patel</h4>
+        <div class="role">Founding Partner</div>
+        <p class="bio">Two decades of SAM advisory experience across the Big Four and specialist consultancies. Has personally led licensing engagements covering IBM, Oracle, SAP, and Microsoft for Fortune 500 clients across four continents.</p>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">VD</div>
+        <h4>Viswam Dhaveji</h4>
+        <div class="role">Founding &amp; Managing Partner</div>
+        <p class="bio">Specialises in IBM and Oracle audit defence. Has led negotiation strategy on engagements that have collectively reduced client audit exposure by hundreds of millions of dollars over the past decade.</p>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">BV</div>
+        <h4>Bhavin Vyas</h4>
+        <div class="role">Optimisation Lead, Licence Optimisation Practice</div>
+        <p class="bio">Microsoft, Adobe, and Autodesk specialist. Architects multi-year optimisation roadmaps for enterprise clients — typically delivering 15&ndash;25% recurring annual savings against the previous baseline.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="container">
+    <div class="cta-inner">
+      <div class="reveal">
+        <div class="section-eyebrow" style="color: var(--amber-bright);">Talk to us</div>
+        <h2>Want to see what <em>we'd find</em>?</h2>
+        <p>The free SAM consultation is exactly what it sounds like. A senior consultant — not a salesperson — spending 30 minutes with you on the highest-risk vendors in your environment.</p>
+        <div class="cta-actions">
+          <a href="contact.html" class="btn-amber">Book free consultation</a>
+          <a href="case-studies.html" class="btn-line">Read case studies</a>
+        </div>
+      </div>
+      <div class="cta-detail reveal">
+        <h4>Already know what you need?</h4>
+        <ul class="cta-list">
+          <li><a href="service-license-optimization.html" style="color: inherit; border-bottom: 1px solid rgba(244,239,230,0.3);">Licence Optimisation</a></li>
+          <li><a href="service-audit-defence.html" style="color: inherit; border-bottom: 1px solid rgba(244,239,230,0.3);">Audit Defence</a></li>
+          <li><a href="service-ai-spend.html" style="color: inherit; border-bottom: 1px solid rgba(244,239,230,0.3);">AI Spend Management</a></li>
+          <li><a href="service-saas-management.html" style="color: inherit; border-bottom: 1px solid rgba(244,239,230,0.3);">SaaS Management</a></li>
+          <li><a href="service-cloud-finops.html" style="color: inherit; border-bottom: 1px solid rgba(244,239,230,0.3);">Cloud FinOps</a></li>
+          <li><a href="services.html" style="color: inherit; border-bottom: 1px solid rgba(244,239,230,0.3);">View all services</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a href="index.html" class="logo" style="color: var(--cream);">proteam</a>
+        <h3>SAM specialists. Nothing else.</h3>
+        <p>An independent Software Asset Management consultancy serving enterprises across India, the UK, the US, and the Middle East.</p>
+
+        <div class="foot-social">
+          <div class="foot-social-label">Follow us on</div>
+          <div class="foot-social-icons">
+            <a href="#" aria-label="LinkedIn" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+            <a href="#" aria-label="X (Twitter)" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.53 3H21l-7.39 8.45L22.5 21h-6.83l-5.34-6.99L3.5 21H0l7.91-9.04L0.5 3h7l4.83 6.4L17.53 3zm-2.39 16h2.06L7.05 4.85H4.83L15.14 19z"/></svg>
+            </a>
+            <a href="#" aria-label="Instagram" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+            <a href="#" aria-label="YouTube" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="currentColor"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="foot-col">
+        <h5>Services</h5>
+        <ul>
+          <li><a href="service-license-optimization.html">Licence Optimisation</a></li>
+          <li><a href="service-audit-defence.html">Audit Defence</a></li>
+          <li><a href="service-sam-baselining.html">SAM Baselining</a></li>
+          <li><a href="service-ai-spend.html">AI Spend Management</a></li>
+          <li><a href="service-ai-adoption.html">AI Adoption &amp; Value</a></li>
+          <li><a href="service-saas-management.html">SaaS Management</a></li>
+          <li><a href="service-cloud-finops.html">Cloud FinOps</a></li>
+          <li><a href="services.html">All Services</a></li>
+        </ul>
+      </div>
+
+      <div class="foot-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="about.html">About</a></li>
+          <li><a href="case-studies.html">Case Studies</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="insights.html">Insights</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="careers.html">Careers</a></li>
+        </ul>
+      </div>
+
+      <div class="foot-col">
+        <h5>Get in touch</h5>
+        <address>
+          Suite #309&ndash;312<br>
+          KTC Illumination Towers<br>
+          Madhapur, Hyderabad<br>
+          Telangana, India<br><br>
+          <a href="tel:+919676889797">+91 9676 889 797</a><br>
+          <a href="mailto:vpatel@proteamadvisory.com">vpatel@proteamadvisory.com</a>
+        </address>
+      </div>
+    </div>
+
+    <div class="foot-bot">
+      <div>&copy; 2026 Proteam Advisory. All rights reserved.</div>
+      <div style="display:flex; gap:24px; flex-wrap:wrap;">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Cookies</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ---- Scroll reveal ----
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add("in"); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+  document.querySelectorAll(".reveal, .reveal-stagger").forEach(el => obs.observe(el));
+
+  // ---- Smooth scroll ----
+  document.querySelectorAll("a[href^='#']").forEach(link => {
+    link.addEventListener("click", e => {
+      const id = link.getAttribute("href");
+      if (id.length > 1) { const tgt = document.querySelector(id); if (tgt) { e.preventDefault(); tgt.scrollIntoView({ behavior: "smooth", block: "start" }); } }
+    });
+  });
+
+  // ---- Mobile menu ----
+  const toggle = document.getElementById("menuToggle");
+  const mobileNav = document.getElementById("mobileNav");
+  function openMenu() {
+    mobileNav.style.display = "flex";
+    requestAnimationFrame(() => mobileNav.classList.add("is-open"));
+    toggle.classList.add("open");
+    toggle.setAttribute("aria-expanded", "true");
+    document.body.style.overflow = "hidden";
+  }
+  function closeMenu() {
+    mobileNav.classList.remove("is-open");
+    toggle.classList.remove("open");
+    toggle.setAttribute("aria-expanded", "false");
+    document.body.style.overflow = "";
+    setTimeout(() => { if (!mobileNav.classList.contains("is-open")) mobileNav.style.display = "none"; }, 350);
+  }
+  toggle.addEventListener("click", () => mobileNav.classList.contains("is-open") ? closeMenu() : openMenu());
+  mobileNav.querySelectorAll("a").forEach(link => link.addEventListener("click", closeMenu));
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && mobileNav.classList.contains("is-open")) closeMenu(); });
+</script>
+</body>
+</html>

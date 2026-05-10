@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Gallery — Proteam Advisory</title>
+<meta name="description" content="The people, office, and field engagements behind Proteam Advisory — an independent Software Asset Management consultancy." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+
+<style>
+
+  .gallery { background: var(--paper); padding: 60px 0 110px; }
+  .gallery-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 56px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--line);
+  }
+  .gallery-tab {
+    padding: 8px 18px;
+    border: 1px solid var(--line);
+    background: #fff;
+    border-radius: 999px;
+    font-size: 13px;
+    color: var(--navy-soft);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+    font-family: var(--sans);
+  }
+  .gallery-tab:hover { border-color: var(--navy); color: var(--navy); }
+  .gallery-tab.active { background: var(--navy); color: var(--cream); border-color: var(--navy); }
+
+  /* Masonry layout — each photo keeps its natural aspect ratio.
+     Landscape photos stay landscape, portrait photos stay portrait,
+     no forced cropping. Photos flow into 3 columns and stack naturally. */
+  .gallery-grid {
+    column-count: 3;
+    column-gap: 20px;
+  }
+  .gallery-item {
+    position: relative;
+    background: var(--cream-warm);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    display: block;
+    /* Critical for masonry — prevents items being split across columns */
+    break-inside: avoid;
+    -webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
+    margin-bottom: 20px;
+  }
+  .gallery-item:hover { transform: translateY(-4px); box-shadow: 0 24px 60px -20px rgba(11,31,58,0.12); }
+  .gallery-item.is-hidden { display: none; }
+  .gallery-item img {
+    width: 100%;
+    height: auto;        /* Preserves the photo's natural aspect ratio */
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .gallery-item:hover img { transform: scale(1.04); }
+  .gallery-item-caption {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 18px 22px 16px;
+    background: linear-gradient(to top, rgba(11,31,58,0.85), transparent);
+    color: var(--cream);
+    opacity: 0;
+    transform: translateY(8px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+  }
+  .gallery-item:hover .gallery-item-caption { opacity: 1; transform: translateY(0); }
+  .gallery-item-caption strong {
+    display: block;
+    font-family: var(--sans);
+    font-size: 18px;
+    font-weight: 400;
+    margin-bottom: 2px;
+    font-variation-settings: "opsz" 36;
+  }
+  .gallery-item-caption span {
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    color: rgba(244,239,230,0.75);
+  }
+
+  /* Closing CTA — refined, replaces the old empty banner */
+  .gallery-closing-cta {
+    margin-top: 72px;
+    padding: 36px 48px;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .gallery-closing-cta p {
+    font-family: var(--sans);
+    font-size: 22px;
+    line-height: 1.35;
+    color: var(--navy);
+    font-weight: 400;
+    font-variation-settings: "opsz" 36;
+    margin: 0;
+    max-width: 560px;
+  }
+  .gallery-closing-cta p em { font-family: var(--serif); font-variation-settings: "opsz" 144; font-style: italic; color: var(--rust); }
+  .gallery-closing-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 22px;
+    background: var(--navy);
+    color: var(--cream);
+    border-radius: var(--radius);
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    letter-spacing: 0.01em;
+    transition: background 0.2s ease, transform 0.2s ease;
+    white-space: nowrap;
+  }
+  .gallery-closing-cta-btn:hover { background: var(--navy-soft, #1a2f4f); transform: translateY(-1px); }
+  .gallery-closing-cta-btn .arrow { transition: transform 0.25s ease; }
+  .gallery-closing-cta-btn:hover .arrow { transform: translateX(3px); }
+
+  /* Kill the browser's default yellow/amber tap-highlight on mobile —
+     fixes the "yellow flash that doesn't go away" on every tappable element */
+  .gallery-tab,
+  .gallery-item,
+  .gallery-closing-cta-btn,
+  .gallery-closing-cta-btn * {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+  }
+
+  /* Focus rings: NO outline on mouse/touch interaction; amber outline ONLY for
+     keyboard navigation (the :focus-visible pseudo-class). Without this, the
+     amber outline persists after tap and looks like a stuck highlight. */
+  .gallery-tab:focus,
+  .gallery-closing-cta-btn:focus,
+  .gallery-item:focus { outline: none; }
+  .gallery-tab:focus-visible,
+  .gallery-closing-cta-btn:focus-visible,
+  .gallery-item:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
+
+  /* Active state on mobile: subtle press feedback that fades immediately on lift */
+  .gallery-closing-cta-btn:active { background: var(--navy-soft, #1a2f4f); transform: translateY(0); }
+
+  @media (max-width: 900px) {
+    .gallery-grid { column-count: 2; column-gap: 14px; }
+    .gallery-item { margin-bottom: 14px; }
+    .gallery-closing-cta { flex-direction: column; align-items: flex-start; padding: 32px 0; }
+    .gallery-closing-cta p { font-size: 19px; }
+  }
+  @media (max-width: 560px) {
+    .gallery-grid { column-count: 1; column-gap: 12px; }
+    .gallery-item { margin-bottom: 12px; }
+    .gallery-tabs { gap: 6px; margin-bottom: 36px; }
+    .gallery-tab { padding: 7px 14px; font-size: 12px; }
+    .gallery-closing-cta { margin-top: 48px; padding: 28px 0; gap: 20px; }
+    .gallery-closing-cta p { font-size: 17px; }
+    .gallery-closing-cta-btn { width: auto; padding: 14px 24px; font-size: 14px; }
+  }
+
+  /* Touch devices: show captions permanently (no hover state) so users
+     can see what each photo is without having to hover */
+  @media (hover: none) {
+    .gallery-item-caption { opacity: 1; transform: translateY(0); }
+    .gallery-item:hover { transform: none; box-shadow: none; }
+    .gallery-item:hover img { transform: none; }
+  }
+
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div class="container">
+    <div class="top-bar-left">
+      <span class="top-bar-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+        <a href="tel:+919676889797">+91 9676 889 797</a>
+      </span>
+      <span class="top-bar-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <a href="mailto:vpatel@proteamadvisory.com">vpatel@proteamadvisory.com</a>
+      </span>
+    </div>
+    <div class="top-bar-right">
+      <span class="top-bar-item">Hyderabad · Serving Global Enterprises</span>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="container nav">
+    <a href="index.html" class="logo">proteam</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="case-studies.html">Case Studies</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <a href="contact.html" class="nav-cta">Free Consultation</a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">
+      <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+    </button>
+  </div>
+</header>
+<!-- MOBILE NAV -->
+<nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+  <ul class="mobile-nav-links">
+    <li><a href="index.html">Home <span>&rarr;</span></a></li>
+    <li><a href="about.html">About <span>&rarr;</span></a></li>
+    <li><a href="services.html">Services <span>&rarr;</span></a></li>
+    <li><a href="case-studies.html">Case Studies <span>&rarr;</span></a></li>
+    <li><a href="contact.html">Contact <span>&rarr;</span></a></li>
+  </ul>
+  <a href="contact.html" class="mobile-nav-cta">Book Free Consultation &rarr;</a>
+  <div class="mobile-nav-contact">
+    <a href="tel:+919676889797"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>+91 9676 889 797</a>
+    <a href="mailto:vpatel@proteamadvisory.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>vpatel@proteamadvisory.com</a>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a>
+      <span class="sep">/</span>
+      <span class="current">Gallery</span>
+    </div>
+    <div class="page-hero-grid">
+      <div>
+        <div class="page-hero-eyebrow">The Proteam Gallery</div>
+        <h1>The <em>people and moments</em> behind the practice.</h1>
+      </div>
+      <p class="page-hero-lede">
+        Software Asset Management is a craft that lives in the work between the contracts. A look at the team, the office, and the field engagements where those numbers get made.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery">
+  <div class="container">
+
+    <div class="gallery-tabs" id="galleryTabs">
+      <span class="gallery-tab active" data-filter="all">All</span>
+      <span class="gallery-tab" data-filter="team">The Team</span>
+      <span class="gallery-tab" data-filter="culture">Office &amp; Culture</span>
+      <span class="gallery-tab" data-filter="events">Events &amp; Speaking</span>
+      <span class="gallery-tab" data-filter="workshops">Client Workshops</span>
+    </div>
+
+    <!--
+      GALLERY GRID
+      ===================================
+      Each .gallery-item has a data-cat attribute used by the filter chips above.
+      Categories: team | culture | events | workshops
+      Add .wide to make any item span 2 columns (best for wide group shots).
+      To add a new photo, copy any <a class="gallery-item"> block and update src,
+      alt, the caption text, and data-cat.
+    -->
+
+    <div class="gallery-grid" id="galleryGrid">
+
+      <a class="gallery-item" href="assets/photos/team-offsite-uk.webp" data-cat="events" target="_blank" rel="noopener">
+        <img src="assets/photos/team-offsite-uk.webp" alt="The full Proteam team at the annual UK off-site, gathered on a London courtyard." loading="lazy">
+        <div class="gallery-item-caption">
+          <strong>The annual UK off-site</strong>
+          <span>London &middot; Practitioner gathering</span>
+        </div>
+      </a>
+
+      <a class="gallery-item" href="assets/photos/team-oxford.webp" data-cat="team" target="_blank" rel="noopener">
+        <img src="assets/photos/team-oxford.webp" alt="Senior consultants on a learning visit to Christ Church, Oxford." loading="lazy">
+        <div class="gallery-item-caption">
+          <strong>Christ Church, Oxford</strong>
+          <span>Team learning visit</span>
+        </div>
+      </a>
+
+      <a class="gallery-item" href="assets/photos/team-london-dinner.webp" data-cat="workshops" target="_blank" rel="noopener">
+        <img src="assets/photos/team-london-dinner.webp" alt="A working dinner with UK partners and the wider team in central London." loading="lazy">
+        <div class="gallery-item-caption">
+          <strong>Working dinner, London</strong>
+          <span>With UK clients &amp; partners</span>
+        </div>
+      </a>
+
+      <a class="gallery-item" href="assets/photos/team-goa-beach.webp" data-cat="team" target="_blank" rel="noopener">
+        <img src="assets/photos/team-goa-beach.webp" alt="The team gathered on the beach at sunset during the annual off-site." loading="lazy">
+        <div class="gallery-item-caption">
+          <strong>Off-site, Goa</strong>
+          <span>Sunset on the team beach</span>
+        </div>
+      </a>
+
+      <a class="gallery-item" href="assets/photos/team-goa-villa.webp" data-cat="team" target="_blank" rel="noopener">
+        <img src="assets/photos/team-goa-villa.webp" alt="The full team at the off-site villa, in the Goa palms after dinner." loading="lazy">
+        <div class="gallery-item-caption">
+          <strong>The villa, after dinner</strong>
+          <span>Goa &middot; Annual off-site</span>
+        </div>
+      </a>
+
+      <a class="gallery-item" href="assets/photos/culture-diwali.webp" data-cat="culture" target="_blank" rel="noopener">
+        <img src="assets/photos/culture-diwali.webp" alt="The Hyderabad team in traditional dress for the Diwali office celebration." loading="lazy">
+        <div class="gallery-item-caption">
+          <strong>Diwali at the office</strong>
+          <span>Hyderabad &middot; Festival of lights</span>
+        </div>
+      </a>
+
+      <a class="gallery-item" href="assets/photos/culture-laser-tag.webp" data-cat="culture" target="_blank" rel="noopener">
+        <img src="assets/photos/culture-laser-tag.webp" alt="A team-building laser tag night with the Hyderabad team." loading="lazy">
+        <div class="gallery-item-caption">
+          <strong>Laser tag night</strong>
+          <span>Team building &middot; Hyderabad</span>
+        </div>
+      </a>
+
+      <a class="gallery-item" href="assets/photos/culture-night-out.webp" data-cat="culture" target="_blank" rel="noopener">
+        <img src="assets/photos/culture-night-out.webp" alt="The team out together for a quarterly celebration." loading="lazy">
+        <div class="gallery-item-caption">
+          <strong>Quarter close celebration</strong>
+          <span>The whole team, off the clock</span>
+        </div>
+      </a>
+
+    </div>
+
+    <div class="gallery-closing-cta">
+      <p>The work happens with people. Want to see how we&rsquo;d <em>work with you</em>?</p>
+      <a href="contact.html" class="gallery-closing-cta-btn">
+        Book a free consultation
+        <span class="arrow">&rarr;</span>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- FOOTER (will be replaced by the standard footer when zipped — using consistent block from script) -->
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a href="index.html" class="logo" style="color: var(--cream);">proteam</a>
+        <h3>SAM specialists. Nothing else.</h3>
+        <p>An independent Software Asset Management consultancy serving enterprises across India, the UK, the US, and the Middle East.</p>
+        <div class="foot-social">
+          <div class="foot-social-label">Follow us on</div>
+          <div class="foot-social-icons">
+            <a href="#" aria-label="LinkedIn" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+            <a href="#" aria-label="X (Twitter)" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.53 3H21l-7.39 8.45L22.5 21h-6.83l-5.34-6.99L3.5 21H0l7.91-9.04L0.5 3h7l4.83 6.4L17.53 3zm-2.39 16h2.06L7.05 4.85H4.83L15.14 19z"/></svg></a>
+            <a href="#" aria-label="Instagram" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+            <a href="#" aria-label="YouTube" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="currentColor"/></svg></a>
+          </div>
+        </div>
+      </div>
+      <div class="foot-col">
+        <h5>Services</h5>
+        <ul>
+          <li><a href="service-license-optimization.html">Licence Optimisation</a></li>
+          <li><a href="service-audit-defence.html">Audit Defence</a></li>
+          <li><a href="service-sam-baselining.html">SAM Baselining</a></li>
+          <li><a href="service-ai-spend.html">AI Spend Management</a></li>
+          <li><a href="service-ai-adoption.html">AI Adoption &amp; Value</a></li>
+          <li><a href="service-saas-management.html">SaaS Management</a></li>
+          <li><a href="service-cloud-finops.html">Cloud FinOps</a></li>
+          <li><a href="services.html">All Services</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="about.html">About</a></li>
+          <li><a href="case-studies.html">Case Studies</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="insights.html">Insights</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="careers.html">Careers</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5>Get in touch</h5>
+        <address>
+          Suite #309&ndash;312<br>
+          KTC Illumination Towers<br>
+          Madhapur, Hyderabad<br>
+          Telangana, India<br><br>
+          <a href="tel:+919676889797">+91 9676 889 797</a><br>
+          <a href="mailto:vpatel@proteamadvisory.com">vpatel@proteamadvisory.com</a>
+        </address>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <div>&copy; 2026 Proteam Advisory. All rights reserved.</div>
+      <div style="display:flex; gap:24px; flex-wrap:wrap;">
+        <a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function() {
+  const toggle = document.getElementById("menuToggle");
+  const mobileNav = document.getElementById("mobileNav");
+  function openMenu() {
+    mobileNav.style.display = "flex";
+    requestAnimationFrame(() => mobileNav.classList.add("is-open"));
+    toggle.classList.add("is-active");
+    toggle.setAttribute("aria-expanded", "true");
+    document.body.style.overflow = "hidden";
+  }
+  function closeMenu() {
+    mobileNav.classList.remove("is-open");
+    toggle.classList.remove("is-active");
+    toggle.setAttribute("aria-expanded", "false");
+    document.body.style.overflow = "";
+    setTimeout(() => { if (!mobileNav.classList.contains("is-open")) mobileNav.style.display = "none"; }, 300);
+  }
+  toggle.addEventListener("click", () => {
+    if (mobileNav.classList.contains("is-open")) closeMenu(); else openMenu();
+  });
+  document.querySelectorAll(".mobile-nav-links a, .mobile-nav-cta").forEach(a => {
+    a.addEventListener("click", closeMenu);
+  });
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape" && mobileNav.classList.contains("is-open")) closeMenu();
+  });
+})();
+</script>
+<script>
+  // Gallery filter chips — filters by data-cat
+  (function() {
+    const tabs = document.querySelectorAll('#galleryTabs .gallery-tab');
+    const items = document.querySelectorAll('#galleryGrid .gallery-item');
+    if (!tabs.length || !items.length) return;
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const filter = tab.dataset.filter;
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        items.forEach(item => {
+          if (filter === 'all' || item.dataset.cat === filter) {
+            item.classList.remove('is-hidden');
+          } else {
+            item.classList.add('is-hidden');
+          }
+        });
+      });
+    });
+  })();
+</script>
+</body>
+</html>

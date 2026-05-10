@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SAP's indirect access audits are quietly ramping again — Proteam Advisory</title>
+<meta name="description" content="Two new clauses in the 2026 GTC have shifted the burden of proof on indirect use. We map the audit triggers, the documentation gaps that get exploited, and" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+
+<style>
+  /* ===== ARTICLE PAGE ===== */
+  .article-hero {
+    background: var(--paper);
+    padding: 72px 0 56px;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+  }
+  .article-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle at 1px 1px, rgba(11,31,58,0.06) 1px, transparent 0);
+    background-size: 32px 32px;
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+    pointer-events: none;
+  }
+  .article-breadcrumb {
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 24px;
+    position: relative;
+    z-index: 1;
+  }
+  .article-breadcrumb a { color: var(--muted); text-decoration: none; }
+  .article-breadcrumb a:hover { color: var(--navy); }
+  .article-breadcrumb .sep { margin: 0 10px; opacity: 0.5; }
+  .article-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+  }
+  .article-tag::before { content: ''; width: 24px; height: 1px; background: var(--amber); }
+  .article-title {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: clamp(36px, 5vw, 64px);
+    line-height: 1.04;
+    letter-spacing: -0.022em;
+    color: var(--navy);
+    max-width: 980px;
+    margin-bottom: 28px;
+    font-variation-settings: "opsz" 144;
+    position: relative;
+    z-index: 1;
+  }
+  .article-title em { font-family: var(--serif); font-variation-settings: "opsz" 144; font-style: italic; color: var(--rust); font-weight: 300; }
+  .article-lede {
+    font-family: var(--sans);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(18px, 1.6vw, 22px);
+    line-height: 1.5;
+    color: var(--navy-soft);
+    max-width: 760px;
+    margin-bottom: 36px;
+    position: relative;
+    z-index: 1;
+    font-variation-settings: "opsz" 36;
+  }
+  .article-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 18px;
+    padding-top: 28px;
+    border-top: 1px solid var(--line);
+    font-size: 13px;
+    color: var(--muted);
+    position: relative;
+    z-index: 1;
+  }
+  .article-meta .author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--navy);
+  }
+  .article-meta .author-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--navy);
+    color: var(--cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--sans);
+    font-style: italic;
+    font-size: 15px;
+  }
+  .article-meta .author-name { font-weight: 500; }
+  .article-meta .sep { opacity: 0.4; }
+
+  /* === ARTICLE BODY === */
+  .article-body {
+    background: var(--paper);
+    padding: 80px 0 100px;
+  }
+  .article-body .container { max-width: 820px; }
+  .article-body p,
+  .article-body h2,
+  .article-body h3,
+  .article-body ul,
+  .article-body ol,
+  .article-body .pullquote,
+  .article-body .takeaway-box {
+    max-width: 760px;
+  }
+  .article-body p {
+    font-size: 18px;
+    line-height: 1.72;
+    color: var(--navy);
+    margin-bottom: 26px;
+  }
+  .article-body p strong { color: var(--navy); font-weight: 600; }
+  .article-body p em { font-family: var(--serif); font-variation-settings: "opsz" 144; font-style: italic; color: var(--rust); }
+  .article-body h2 {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: clamp(26px, 2.6vw, 34px);
+    line-height: 1.18;
+    letter-spacing: -0.015em;
+    color: var(--navy);
+    margin: 56px 0 24px;
+    font-variation-settings: "opsz" 144;
+  }
+  .article-body h2 em { font-family: var(--serif); font-variation-settings: "opsz" 144; font-style: italic; color: var(--rust); font-weight: 300; }
+  .article-body h3 {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 18px;
+    color: var(--navy);
+    margin: 36px 0 16px;
+    letter-spacing: -0.005em;
+  }
+  .article-body ul, .article-body ol {
+    margin: 0 0 26px 24px;
+    padding-left: 4px;
+  }
+  .article-body li {
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--navy);
+    margin-bottom: 10px;
+  }
+  .article-body li::marker { color: var(--amber); }
+
+  /* Pull quote */
+  .pullquote {
+    background: var(--cream);
+    border-left: 3px solid var(--amber);
+    padding: 32px 40px;
+    margin: 48px 0;
+    border-radius: 0 4px 4px 0;
+  }
+  .pullquote p {
+    font-family: var(--sans);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 1.45;
+    color: var(--navy);
+    margin: 0;
+    font-variation-settings: "opsz" 36;
+  }
+  .pullquote p::before { content: '"'; color: var(--amber); margin-right: 4px; }
+  .pullquote p::after { content: '"'; color: var(--amber); margin-left: 4px; }
+
+  /* Takeaway box */
+  .takeaway-box {
+    background: var(--navy);
+    color: var(--cream);
+    padding: 36px 40px;
+    border-radius: 4px;
+    margin: 48px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .takeaway-box::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 240px; height: 240px;
+    background: radial-gradient(circle, rgba(200,147,43,0.18) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .takeaway-box .label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 1;
+  }
+  .takeaway-box h3 {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 1.3;
+    color: var(--cream);
+    margin: 0 0 16px;
+    font-variation-settings: "opsz" 36;
+    position: relative;
+    z-index: 1;
+  }
+  .takeaway-box ul {
+    margin: 0;
+    padding-left: 20px;
+    position: relative;
+    z-index: 1;
+  }
+  .takeaway-box li {
+    color: rgba(244,239,230,0.9);
+    font-size: 16px;
+    line-height: 1.65;
+    margin-bottom: 8px;
+  }
+  .takeaway-box li::marker { color: var(--amber); }
+
+  /* Inline CTA */
+  .inline-cta {
+    margin: 56px 0;
+    padding: 36px 40px;
+    background: var(--cream);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .inline-cta-text {
+    font-family: var(--sans);
+    font-size: 19px;
+    line-height: 1.4;
+    color: var(--navy);
+    flex: 1;
+    min-width: 280px;
+    font-variation-settings: "opsz" 36;
+  }
+  .inline-cta-text em { font-family: var(--serif); font-variation-settings: "opsz" 144; font-style: italic; color: var(--rust); }
+  .inline-cta-btn {
+    background: var(--navy);
+    color: var(--cream);
+    padding: 14px 28px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+  .inline-cta-btn:hover { background: var(--navy-soft); transform: translateY(-1px); }
+
+  /* === READ NEXT === */
+  .read-next {
+    background: var(--cream);
+    padding: 96px 0 80px;
+    border-top: 1px solid var(--line);
+  }
+  .read-next-head {
+    margin-bottom: 48px;
+  }
+  .read-next-head .label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 16px;
+    font-weight: 600;
+  }
+  .read-next-head h2 {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: clamp(28px, 3vw, 40px);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--navy);
+    font-variation-settings: "opsz" 144;
+  }
+  .read-next-head h2 em { font-family: var(--serif); font-variation-settings: "opsz" 144; font-style: italic; color: var(--rust); font-weight: 300; }
+  .read-next-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .next-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 32px 28px;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .next-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 2px;
+    background: var(--amber);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+  .next-card:hover {
+    border-color: var(--navy);
+    transform: translateY(-3px);
+    box-shadow: 0 18px 40px -16px rgba(11,31,58,0.15);
+  }
+  .next-card:hover::before { transform: scaleX(1); }
+  .next-card .meta {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .next-card .meta .tag { color: var(--amber); font-weight: 600; }
+  .next-card h3 {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 1.25;
+    color: var(--navy);
+    margin-bottom: 14px;
+    font-variation-settings: "opsz" 36;
+    flex: 1;
+  }
+  .next-card h3 em { font-family: var(--serif); font-variation-settings: "opsz" 144; font-style: italic; color: var(--rust); }
+  .next-card .arrow {
+    margin-top: auto;
+    font-size: 13px;
+    color: var(--rust);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: gap 0.25s ease;
+  }
+  .next-card:hover .arrow { gap: 14px; }
+
+  /* === FINAL CTA === */
+  .article-final-cta {
+    background: var(--navy);
+    color: var(--cream);
+    padding: 100px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .article-final-cta::before {
+    content: '';
+    position: absolute;
+    top: -200px; right: -200px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(200,147,43,0.18) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .article-final-cta::after {
+    content: '';
+    position: absolute;
+    bottom: -200px; left: -200px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(184,92,56,0.12) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .article-final-cta .container {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 720px;
+  }
+  .article-final-cta .label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 20px;
+    font-weight: 600;
+  }
+  .article-final-cta h2 {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: clamp(32px, 4vw, 52px);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+    font-variation-settings: "opsz" 144;
+  }
+  .article-final-cta h2 em { font-family: var(--serif); font-variation-settings: "opsz" 144; font-style: italic; color: var(--amber); font-weight: 300; }
+  .article-final-cta p {
+    font-size: 17px;
+    line-height: 1.65;
+    color: rgba(244,239,230,0.8);
+    margin-bottom: 36px;
+  }
+  .article-final-cta .cta-row {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .article-final-cta .btn-primary {
+    background: var(--amber);
+    color: var(--navy);
+    padding: 16px 32px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+  .article-final-cta .btn-primary:hover { background: var(--amber-bright); transform: translateY(-1px); }
+  .article-final-cta .btn-ghost {
+    background: transparent;
+    color: var(--cream);
+    border: 1px solid rgba(244,239,230,0.3);
+    padding: 16px 32px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+  .article-final-cta .btn-ghost:hover { border-color: var(--cream); background: rgba(244,239,230,0.05); }
+
+  @media (max-width: 900px) {
+    .read-next-grid { grid-template-columns: 1fr; }
+    .pullquote { padding: 24px 28px; }
+    .pullquote p { font-size: 19px; }
+    .takeaway-box { padding: 28px 24px; }
+    .inline-cta { padding: 28px 24px; }
+    .article-body { padding: 56px 0 72px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div class="container">
+    <div class="top-bar-left">
+      <span class="top-bar-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+        <a href="tel:+919676889797">+91 9676 889 797</a>
+      </span>
+      <span class="top-bar-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <a href="mailto:vpatel@proteamadvisory.com">vpatel@proteamadvisory.com</a>
+      </span>
+    </div>
+    <div class="top-bar-right">
+      <span class="top-bar-item">Hyderabad · Serving Global Enterprises</span>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="container nav">
+    <a href="index.html" class="logo">proteam</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="case-studies.html">Case Studies</a></li>
+      <li><a href="insights.html" class="active">Insights</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <a href="contact.html" class="nav-cta">Free Consultation</a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+  </div>
+</header>
+
+<!-- MOBILE NAV -->
+<nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+  <ul class="mobile-nav-links">
+    <li><a href="index.html">Home <span>&rarr;</span></a></li>
+    <li><a href="about.html">About <span>&rarr;</span></a></li>
+    <li><a href="services.html">Services <span>&rarr;</span></a></li>
+    <li><a href="case-studies.html">Case Studies <span>&rarr;</span></a></li>
+    <li><a href="insights.html">Insights <span>&rarr;</span></a></li>
+    <li><a href="contact.html">Contact <span>&rarr;</span></a></li>
+  </ul>
+  <a href="contact.html" class="mobile-nav-cta">Book Free Consultation &rarr;</a>
+</nav>
+
+<!-- ARTICLE HERO -->
+<section class="article-hero">
+  <div class="container">
+    <div class="article-breadcrumb">
+      <a href="index.html">Home</a><span class="sep">/</span>
+      <a href="insights.html">Insights</a><span class="sep">/</span>
+      <span>Audit Defence</span>
+    </div>
+    <div class="article-tag">Audit Defence</div>
+    <h1 class="article-title">SAP&rsquo;s indirect access audits are quietly ramping again. <em>Here&rsquo;s what changed.</em></h1>
+    <p class="article-lede">Two new clauses in the 2026 GTC have shifted the burden of proof on indirect use. We map the audit triggers, the documentation gaps that get exploited, and a 30-day baseline plan.</p>
+    <div class="article-meta">
+      <div class="author">
+        <div class="author-avatar">VP</div>
+        <div>
+          <div class="author-name">Vinod Patel</div>
+          <div>Managing Partner, Proteam Advisory</div>
+        </div>
+      </div>
+      <span class="sep">·</span>
+      <span>11 February 2026</span>
+      <span class="sep">·</span>
+      <span>8 min read</span>
+    </div>
+  </div>
+</section>
+
+<section class="article-body">
+  <div class="container">
+
+    <p>SAP indirect access went quiet for about three years. The 2022 conversation that lit up the SAP user community — the Diageo precedent, the Digital Access framework, the engine-document model — settled into a familiar shape, and most enterprises moved on to other licensing concerns.</p>
+
+    <p>The 2026 General Terms and Conditions have changed the temperature again. Two new clauses have shifted the burden of proof on indirect use, and SAP's License Audit Services team is using them. Across our last six audit-defence engagements, indirect access has been the central issue in five.</p>
+
+    <h2>What changed in the 2026 GTC</h2>
+
+    <p>Two clauses in particular are driving the shift.</p>
+
+    <h3>Clause 6.4 — "Authorised Use Documentation"</h3>
+
+    <p>The 2024 GTC required SAP to demonstrate that indirect use was occurring before triggering a Digital Access licence requirement. The 2026 wording reverses this: the customer is now obliged, on request, to produce documentation evidencing the categorisation of every system that connects to SAP — including categorisation of which connections are "humans" versus "non-human consumers" versus "engine-driven processes."</p>
+
+    <p>The shift is subtle but consequential. In an audit, the question is no longer "can SAP prove indirect use" but "can the customer prove the absence of unlicensed indirect use." The default assumption now sits with the auditor.</p>
+
+    <h3>Clause 9.1 — "Documentation Refresh Cadence"</h3>
+
+    <p>Authorised Use Documentation must now be "current within the most recent 12 months" at the time of any audit. In practice, this means an annual exercise. Many enterprises did the original Digital Access categorisation in 2019-2021, captured the result in a static spreadsheet, and never revisited it. Three years later that spreadsheet is no longer "current," even if the categorisations are still substantively correct.</p>
+
+    <div class="pullquote">
+      <p>The 2026 GTC didn't change what indirect access is. It changed who has to prove it. And the evidence threshold has moved from SAP's audit team to the customer's licence administrator.</p>
+    </div>
+
+    <h2>The audit triggers we're seeing</h2>
+
+    <p>From the engagements we've worked, three triggers are showing up consistently.</p>
+
+    <h3>Trigger 1: A new SaaS or middleware connection</h3>
+
+    <p>Any new connection from a non-SAP system into the ECC or S/4HANA estate — whether MuleSoft, Boomi, custom IDocs, or a SaaS integrator — is the most common audit trigger. The licensing team picks up the connection in their architecture review, asks for the Authorised Use Documentation, and the existence (or absence) of current categorisation determines what happens next.</p>
+
+    <h3>Trigger 2: M&A activity</h3>
+
+    <p>Any acquisition that brings new systems into the SAP-connected landscape will trigger a documentation request. The 2026 wording explicitly applies to "systems acquired through corporate transactions," which removes a previous grey area.</p>
+
+    <h3>Trigger 3: An unrelated licence dispute</h3>
+
+    <p>This is the one we see most often. A negotiation about something else — a HANA renewal, an S/4HANA conversion, a new RISE commitment — produces an attachment that re-evaluates indirect access at the same time. The new clauses make this easier for SAP to do.</p>
+
+    <h2>The documentation gaps that get exploited</h2>
+
+    <p>The Authorised Use Documentation is, in our experience, the difference between a 30-day audit and a six-month one. Three gaps appear consistently.</p>
+
+    <h3>Gap 1: Engine-document categorisation drift</h3>
+
+    <p>The Digital Access framework prices on document type and volume — sales documents, purchase documents, financial documents, manufacturing documents. The categorisation done in 2019 may not reflect the actual document mix being created in 2026, especially if the business has shifted toward more direct customer integration. SAP's auditors have access to the document creation tables; the customer's documentation often does not match.</p>
+
+    <h3>Gap 2: Read-only access ambiguity</h3>
+
+    <p>The 2026 GTC retains the principle that read-only access from non-SAP systems is generally not chargeable, but the documentation requirements around proving read-only-ness have tightened. Several clients have discovered that a "read-only" connection set up in 2018 has, through subsequent enhancement, gained write capability that was never re-licensed.</p>
+
+    <h3>Gap 3: Service account proliferation</h3>
+
+    <p>Service accounts are a perennial issue. Each non-named service account that connects to SAP is, technically, a non-human consumer that requires Digital Access licensing. The auditors have process discovery tools that identify these. The customer rarely has a current inventory.</p>
+
+    <div class="inline-cta">
+      <div class="inline-cta-text">Just received an SAP audit notice or AUD request? <em>Don't reply</em> until we've reviewed it.</div>
+      <a href="contact.html?source=article-sap" class="inline-cta-btn">Book a free consultation →</a>
+    </div>
+
+    <h2>A 30-day baseline plan</h2>
+
+    <p>If you're reading this and your Authorised Use Documentation is older than 12 months, the following is the minimum work required to get current.</p>
+
+    <h3>Week 1: System inventory</h3>
+
+    <p>Catalogue every system that connects to SAP. Include its purpose, integration mechanism (RFC, BAPI, IDoc, OData, REST), data flow direction, and current ownership. The objective is a single source of truth for "what touches SAP from outside."</p>
+
+    <h3>Week 2: Categorisation</h3>
+
+    <p>For each connection, categorise the consumers as Named User (human), Digital Access (non-human document creator), or Engine (system-driven process). Where the categorisation is ambiguous, document the reasoning. Ambiguity itself is acceptable; missing reasoning is not.</p>
+
+    <h3>Week 3: Volumetrics</h3>
+
+    <p>For Digital Access categorisations, pull the actual document creation volumes from the relevant tables for the most recent 12-month window. Compare against the licensed entitlement. Identify any over-consumption before SAP does.</p>
+
+    <h3>Week 4: Remediation and documentation</h3>
+
+    <p>Where over-consumption exists, decide between true-up purchase, architectural remediation (re-routing creation through licensed Named Users), or commercial negotiation. Document the position taken, with evidence, in a format that meets the GTC's "current" requirement.</p>
+
+    <div class="takeaway-box">
+      <div class="label">Practitioner's Takeaway</div>
+      <h3>The 2026 GTC has shifted the documentation burden. Move with it.</h3>
+      <ul>
+        <li>Refresh your Authorised Use Documentation annually. The 12-month currency requirement is enforceable.</li>
+        <li>Maintain a live inventory of every non-SAP system that connects to your SAP estate, with categorisation and ownership.</li>
+        <li>Service accounts are the single most overlooked source of unlicensed indirect access. Inventory them now.</li>
+        <li>If an audit notice arrives, do not respond on auto-pilot. The first 72 hours of an SAP audit shape the next 90 days.</li>
+      </ul>
+    </div>
+
+    <h2>The shorter version</h2>
+
+    <p>SAP didn't make indirect access more aggressive. They made the documentation requirement more aggressive. For most enterprises, the licensing position is defensible — provided the documentation supports it. Most documentation, right now, doesn't.</p>
+
+  </div>
+</section>
+<!-- READ NEXT -->
+<section class="read-next">
+  <div class="container">
+    <div class="read-next-head">
+      <div class="label">Read next</div>
+      <h2>Other <em>field notes</em> from the practice.</h2>
+    </div>
+    <div class="read-next-grid">
+      <a href="article-oracle-java.html" class="next-card">
+        <div class="meta">
+          <span class="tag">Vendor Playbook</span>
+          <span>·</span>
+          <span>9 min</span>
+        </div>
+        <h3>The Oracle Java SE reset: what every <em>finance team</em> should ask before April renewals.</h3>
+        <span class="arrow">Read on <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+      </a>
+
+      <a href="article-microsoft365-pharma.html" class="next-card">
+        <div class="meta">
+          <span class="tag">Case Scenario</span>
+          <span>·</span>
+          <span>6 min</span>
+        </div>
+        <h3>How a global pharma client cut Microsoft 365 spend by <em>34%</em> without losing a single user.</h3>
+        <span class="arrow">Read on <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+      </a>
+
+      <a href="article-copilot-shelfware.html" class="next-card">
+        <div class="meta">
+          <span class="tag">AI &amp; Copilot</span>
+          <span>·</span>
+          <span>7 min</span>
+        </div>
+        <h3>The Copilot sprawl pattern nobody is talking about: <em>shelfware at scale</em>.</h3>
+        <span class="arrow">Read on <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+      </a>
+
+    </div>
+  </div>
+</section>
+<!-- FINAL CTA -->
+<section class="article-final-cta">
+  <div class="container">
+    <div class="label">Ready to dig deeper?</div>
+    <h2>Bring us your <em>real situation</em>.</h2>
+    <p>30-minute, no-obligation review with a senior consultant. We'll map your contract, model the alternatives, and tell you whether you actually need our help — honestly.</p>
+    <div class="cta-row">
+      <a href="contact.html?source=article-sap" class="btn-primary">Book a free consultation</a>
+      <a href="insights.html" class="btn-ghost">More insights</a>
+    </div>
+  </div>
+</section>
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a href="index.html" class="logo" style="color: var(--cream);">proteam</a>
+        <h3>SAM specialists. Nothing else.</h3>
+        <p>An independent Software Asset Management consultancy serving enterprises across India, the UK, the US, and the Middle East.</p>
+        <div class="foot-social">
+          <div class="foot-social-label">Follow us on</div>
+          <div class="foot-social-icons">
+            <a href="#" aria-label="LinkedIn" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+            <a href="#" aria-label="X (Twitter)" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.53 3H21l-7.39 8.45L22.5 21h-6.83l-5.34-6.99L3.5 21H0l7.91-9.04L0.5 3h7l4.83 6.4L17.53 3zm-2.39 16h2.06L7.05 4.85H4.83L15.14 19z"/></svg>
+            </a>
+            <a href="#" aria-label="Instagram" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+            <a href="#" aria-label="YouTube" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="currentColor"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="foot-col">
+        <h5>Services</h5>
+        <ul>
+          <li><a href="service-license-optimization.html">Licence Optimisation</a></li>
+          <li><a href="service-audit-defence.html">Audit Defence</a></li>
+          <li><a href="service-sam-baselining.html">SAM Baselining</a></li>
+          <li><a href="service-ai-spend.html">AI Spend Management</a></li>
+          <li><a href="service-ai-adoption.html">AI Adoption &amp; Value</a></li>
+          <li><a href="service-saas-management.html">SaaS Management</a></li>
+          <li><a href="service-cloud-finops.html">Cloud FinOps</a></li>
+          <li><a href="services.html">All Services</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="about.html">About</a></li>
+          <li><a href="case-studies.html">Case Studies</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="insights.html">Insights</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="careers.html">Careers</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5>Get in touch</h5>
+        <address>
+          Suite #309&ndash;312<br>
+          KTC Illumination Towers<br>
+          Madhapur, Hyderabad<br>
+          Telangana, India<br><br>
+          <a href="tel:+919676889797">+91 9676 889 797</a><br>
+          <a href="mailto:vpatel@proteamadvisory.com">vpatel@proteamadvisory.com</a>
+        </address>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <div>&copy; 2026 Proteam Advisory. All rights reserved.</div>
+      <div style="display:flex; gap:24px; flex-wrap:wrap;">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Cookies</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Mobile nav
+  const toggle = document.getElementById("menuToggle");
+  const mobileNav = document.getElementById("mobileNav");
+  function openMenu() { mobileNav.style.display = "block"; requestAnimationFrame(() => mobileNav.classList.add("is-open")); toggle.classList.add("open"); toggle.setAttribute("aria-expanded","true"); document.body.style.overflow = "hidden"; }
+  function closeMenu() { mobileNav.classList.remove("is-open"); toggle.classList.remove("open"); toggle.setAttribute("aria-expanded","false"); document.body.style.overflow = ""; setTimeout(() => { if (!mobileNav.classList.contains("is-open")) mobileNav.style.display = "none"; }, 350); }
+  toggle.addEventListener("click", () => mobileNav.classList.contains("is-open") ? closeMenu() : openMenu());
+  mobileNav.querySelectorAll("a").forEach(a => a.addEventListener("click", closeMenu));
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && mobileNav.classList.contains("is-open")) closeMenu(); });
+</script>
+</body>
+</html>

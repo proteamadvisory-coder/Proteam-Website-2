@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Careers — Proteam Advisory</title>
+<meta name="description" content="Build the next chapter of Software Asset Management with Proteam — boutique consultancy, senior practitioners, ownership economics." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+
+<style>
+
+  .careers-intro { background: var(--paper); padding: 60px 0 80px; }
+  .careers-intro-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .careers-intro h2 {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: clamp(32px, 4vw, 48px);
+    line-height: 1.05;
+    color: var(--navy);
+    margin-bottom: 20px;
+    letter-spacing: -0.02em;
+    font-variation-settings: "opsz" 144;
+  }
+  .careers-intro h2 em { font-family: var(--serif); font-variation-settings: "opsz" 144; font-style: italic; color: var(--rust); font-weight: 300; }
+  .careers-intro p {
+    font-size: 17px;
+    line-height: 1.65;
+    color: var(--navy-soft);
+    margin-bottom: 24px;
+  }
+  .careers-values {
+    display: grid;
+    gap: 24px;
+  }
+  .careers-value {
+    display: flex;
+    gap: 20px;
+    padding: 24px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    transition: all 0.25s ease;
+  }
+  .careers-value:hover { border-color: var(--navy); transform: translateX(4px); }
+  .careers-value-num {
+    font-family: var(--sans);
+    font-size: 32px;
+    color: var(--amber);
+    flex-shrink: 0;
+    line-height: 1;
+    font-variation-settings: "opsz" 144;
+  }
+  .careers-value h4 {
+    font-family: var(--sans);
+    font-size: 18px;
+    color: var(--navy);
+    margin-bottom: 6px;
+    font-weight: 400;
+    font-variation-settings: "opsz" 36;
+  }
+  .careers-value p { font-size: 14px; line-height: 1.55; color: var(--navy-soft); margin: 0; }
+
+  .openings { background: var(--cream); padding: 80px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .openings-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+  .openings-head h2 {
+    font-family: var(--sans);
+    font-size: clamp(28px, 3.4vw, 40px);
+    color: var(--navy);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    font-variation-settings: "opsz" 144;
+  }
+  .openings-head h2 em { font-family: var(--serif); font-variation-settings: "opsz" 144; font-style: italic; color: var(--rust); font-weight: 300; }
+  .openings-count {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  .openings-empty {
+    background: #fff;
+    border: 1px dashed var(--line);
+    border-radius: var(--radius);
+    padding: 56px 40px;
+    text-align: center;
+  }
+  .openings-empty svg {
+    width: 48px;
+    height: 48px;
+    color: var(--amber);
+    margin-bottom: 20px;
+  }
+  .openings-empty h3 {
+    font-family: var(--sans);
+    font-size: 26px;
+    color: var(--navy);
+    margin-bottom: 12px;
+    font-weight: 400;
+    font-variation-settings: "opsz" 36;
+  }
+  .openings-empty h3 em { font-family: var(--serif); font-variation-settings: "opsz" 144; font-style: italic; color: var(--rust); }
+  .openings-empty p {
+    font-size: 15px;
+    color: var(--navy-soft);
+    max-width: 540px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* Active job card style — used when positions exist */
+  .opening-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 28px 32px;
+    margin-bottom: 16px;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr auto;
+    gap: 32px;
+    align-items: center;
+    transition: all 0.25s ease;
+    text-decoration: none;
+    color: var(--navy);
+  }
+  .opening-card:hover { border-color: var(--navy); transform: translateY(-2px); box-shadow: 0 16px 40px -16px rgba(11,31,58,0.12); }
+  .opening-card h3 {
+    font-family: var(--sans);
+    font-size: 22px;
+    margin-bottom: 4px;
+    font-weight: 400;
+    font-variation-settings: "opsz" 36;
+  }
+  .opening-card .opening-tag {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--amber);
+    font-weight: 600;
+  }
+  .opening-card .opening-meta { font-size: 13px; color: var(--navy-soft); }
+  .opening-card .opening-apply {
+    padding: 10px 22px;
+    background: var(--navy);
+    color: var(--cream);
+    border-radius: var(--radius);
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  /* Talent network form */
+  .talent-form-section { background: var(--paper); padding: 100px 0; }
+  .talent-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 64px;
+    align-items: start;
+  }
+  .talent-form-side h2 {
+    font-family: var(--sans);
+    font-size: clamp(32px, 4vw, 44px);
+    line-height: 1.05;
+    color: var(--navy);
+    margin-bottom: 20px;
+    letter-spacing: -0.02em;
+    font-weight: 400;
+    font-variation-settings: "opsz" 144;
+  }
+  .talent-form-side h2 em { font-family: var(--serif); font-variation-settings: "opsz" 144; font-style: italic; color: var(--rust); font-weight: 300; }
+  .talent-form-side p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--navy-soft);
+    margin-bottom: 32px;
+  }
+  .talent-form-side .stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    padding-top: 32px;
+    border-top: 1px solid var(--line);
+  }
+  .talent-form-side .stats div .num {
+    font-family: var(--sans);
+    font-size: 38px;
+    color: var(--amber);
+    line-height: 1;
+    margin-bottom: 6px;
+    font-variation-settings: "opsz" 144;
+  }
+  .talent-form-side .stats div .lbl {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  .talent-form {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 40px;
+  }
+  .talent-form-head {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 28px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--line);
+  }
+  .form-step {
+    display: none;
+    animation: fadeUp 0.4s ease;
+  }
+  .form-step.active { display: block; }
+  .form-progress {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 28px;
+  }
+  .form-progress-dot {
+    flex: 1;
+    height: 3px;
+    background: var(--line);
+    border-radius: 2px;
+    transition: background 0.3s ease;
+  }
+  .form-progress-dot.active { background: var(--amber); }
+  .form-progress-dot.done { background: var(--navy); }
+
+  .form-field { margin-bottom: 22px; }
+  .form-field label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--navy);
+    margin-bottom: 10px;
+  }
+  .form-field input, .form-field textarea, .form-field select {
+    width: 100%;
+    padding: 13px 16px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    font-family: var(--sans);
+    font-size: 14px;
+    color: var(--navy);
+    background: #fff;
+    outline: none;
+    transition: border-color 0.15s ease;
+  }
+  .form-field input:focus, .form-field textarea:focus, .form-field select:focus {
+    border-color: var(--navy);
+  }
+  .form-field textarea { resize: vertical; min-height: 120px; }
+
+  .interest-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .interest-chip {
+    padding: 8px 14px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: #fff;
+    font-size: 13px;
+    color: var(--navy-soft);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    user-select: none;
+  }
+  .interest-chip:hover { border-color: var(--navy); color: var(--navy); }
+  .interest-chip.active { background: var(--navy); color: var(--cream); border-color: var(--navy); }
+
+  .file-upload {
+    border: 2px dashed var(--line);
+    border-radius: var(--radius);
+    padding: 28px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: var(--paper);
+  }
+  .file-upload:hover { border-color: var(--navy); background: var(--cream-warm); }
+  .file-upload svg { width: 28px; height: 28px; color: var(--muted); margin-bottom: 8px; }
+  .file-upload .file-label { font-size: 14px; color: var(--navy); font-weight: 500; }
+  .file-upload .file-hint { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  .file-upload input { display: none; }
+  .file-name { margin-top: 10px; font-size: 13px; color: var(--rust); display: none; }
+  .file-name.visible { display: block; }
+
+  .form-nav { display: flex; gap: 12px; margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--line); }
+  .form-btn {
+    padding: 13px 26px;
+    border: none;
+    border-radius: var(--radius);
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .form-btn.primary { background: var(--navy); color: var(--cream); flex: 1; }
+  .form-btn.primary:hover { background: var(--navy-soft); }
+  .form-btn.secondary { background: transparent; color: var(--navy); border: 1px solid var(--line); }
+  .form-btn.secondary:hover { border-color: var(--navy); }
+
+  .form-success {
+    text-align: center;
+    padding: 40px 20px;
+    display: none;
+  }
+  .form-success.active { display: block; }
+  .form-success svg { width: 56px; height: 56px; color: var(--amber); margin-bottom: 20px; }
+  .form-success h3 {
+    font-family: var(--sans);
+    font-size: 26px;
+    color: var(--navy);
+    margin-bottom: 12px;
+    font-weight: 400;
+    font-variation-settings: "opsz" 36;
+  }
+  .form-success p { font-size: 15px; color: var(--navy-soft); line-height: 1.6; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 900px) {
+    .careers-intro-grid { grid-template-columns: 1fr; gap: 48px; }
+    .talent-form-grid { grid-template-columns: 1fr; gap: 40px; }
+    .talent-form { padding: 28px 24px; }
+    .opening-card { grid-template-columns: 1fr; gap: 12px; }
+    .opening-card .opening-apply { justify-self: flex-start; }
+  }
+
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div class="container">
+    <div class="top-bar-left">
+      <span class="top-bar-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+        <a href="tel:+919676889797">+91 9676 889 797</a>
+      </span>
+      <span class="top-bar-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <a href="mailto:vpatel@proteamadvisory.com">vpatel@proteamadvisory.com</a>
+      </span>
+    </div>
+    <div class="top-bar-right">
+      <span class="top-bar-item">Hyderabad · Serving Global Enterprises</span>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="container nav">
+    <a href="index.html" class="logo">proteam</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="case-studies.html">Case Studies</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <a href="contact.html" class="nav-cta">Free Consultation</a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">
+      <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+    </button>
+  </div>
+</header>
+<!-- MOBILE NAV -->
+<nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+  <ul class="mobile-nav-links">
+    <li><a href="index.html">Home <span>&rarr;</span></a></li>
+    <li><a href="about.html">About <span>&rarr;</span></a></li>
+    <li><a href="services.html">Services <span>&rarr;</span></a></li>
+    <li><a href="case-studies.html">Case Studies <span>&rarr;</span></a></li>
+    <li><a href="contact.html">Contact <span>&rarr;</span></a></li>
+  </ul>
+  <a href="contact.html" class="mobile-nav-cta">Book Free Consultation &rarr;</a>
+  <div class="mobile-nav-contact">
+    <a href="tel:+919676889797"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>+91 9676 889 797</a>
+    <a href="mailto:vpatel@proteamadvisory.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>vpatel@proteamadvisory.com</a>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a>
+      <span class="sep">/</span>
+      <span class="current">Careers</span>
+    </div>
+    <div class="page-hero-grid">
+      <div>
+        <div class="page-hero-eyebrow">Careers at Proteam</div>
+        <h1>Build the next chapter of <em>SAM</em> with us.</h1>
+      </div>
+      <p class="page-hero-lede">
+        We&rsquo;re a team of senior practitioners and craft-obsessed analysts. No layers, no internal politics &mdash; just deep work for clients who care about getting it right.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- INTRO + VALUES -->
+<section class="careers-intro">
+  <div class="container">
+    <div class="careers-intro-grid">
+      <div>
+        <h2>Why <em>this</em> team, in <em>this</em> category, right now.</h2>
+        <p>SAM is having its decade. Software costs as a share of enterprise budget have doubled in five years. AI tooling has rewritten the contract landscape. Cloud is no longer a line item, it&rsquo;s the largest one. The teams who can read this complexity and act on it are rare and getting rarer.</p>
+        <p>Proteam is the boutique alternative to the global generalists &mdash; smaller, sharper, and built around the principle that the people doing the work should be the people the client meets. If that resonates, you&rsquo;ll fit here.</p>
+      </div>
+      <div class="careers-values">
+        <div class="careers-value">
+          <div class="careers-value-num">01</div>
+          <div>
+            <h4>Senior practitioners only</h4>
+            <p>No pyramid model. Everyone client-facing has at least 8 years of vendor-side or consulting experience. You&rsquo;re hired to do the work, not to manage someone doing the work.</p>
+          </div>
+        </div>
+        <div class="careers-value">
+          <div class="careers-value-num">02</div>
+          <div>
+            <h4>Outcomes over hours</h4>
+            <p>We measure success by client savings realised, not utilisation. Flexible time, remote-first, and a four-day week trial running through 2026.</p>
+          </div>
+        </div>
+        <div class="careers-value">
+          <div class="careers-value-num">03</div>
+          <div>
+            <h4>Ownership economics</h4>
+            <p>Senior consultants and practice leads have meaningful equity in firm performance. When the firm wins, the team wins on the same terms.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CURRENT OPENINGS -->
+<section class="openings">
+  <div class="container">
+    <div class="openings-head">
+      <h2>Open positions <em>right now</em>.</h2>
+      <span class="openings-count" id="openingsCount">0 active openings</span>
+    </div>
+
+    <!--
+      ===== JOB POSTINGS =====
+      No active openings at the moment. To post a new role, REPLACE the <div class="openings-empty">
+      block below with one or more <a class="opening-card"> blocks like this:
+
+      <a href="careers-apply.html?role=senior-sam-consultant" class="opening-card">
+        <div>
+          <span class="opening-tag">Practice · Audit Defence</span>
+          <h3>Senior SAM Consultant</h3>
+        </div>
+        <div class="opening-meta">Hyderabad / Remote (India)</div>
+        <div class="opening-meta">Full-time · Senior level</div>
+        <span class="opening-apply">Apply &rarr;</span>
+      </a>
+
+      Then update the openingsCount text above to "1 active opening" / "3 active openings" etc.
+    -->
+
+    <div class="openings-empty">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      <h3>No openings <em>right now</em> &mdash; but we&rsquo;re always listening.</h3>
+      <p>We hire when the right person walks in, not when a req opens. If you&rsquo;ve spent meaningful time inside a SAM, FinOps, or vendor-licensing function and you want to do this work for a living, talk to us via the form below. We keep a confidential talent network and the next opening is always closer than it looks.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TALENT NETWORK FORM -->
+<section class="talent-form-section">
+  <div class="container">
+    <div class="talent-form-grid">
+      <div class="talent-form-side">
+        <h2>Join our <em>talent network</em>.</h2>
+        <p>Three minutes now. We&rsquo;ll review every submission within ten working days and flag you for the next role that matches. Your details stay confidential and are never shared outside the partnership.</p>
+        <p>Particularly interested in hearing from: vendor licensing professionals (ex-Oracle LMS, ex-Microsoft SAM, ex-IBM ELM), Big-4 consultants ready to leave the slide deck behind, and FinOps practitioners with hands-on experience in AWS / Azure / GCP unit-economics modelling.</p>
+        <div class="stats">
+          <div>
+            <div class="num">10d</div>
+            <div class="lbl">Avg. response time</div>
+          </div>
+          <div>
+            <div class="num">100%</div>
+            <div class="lbl">Confidential review</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="talent-form">
+        <div class="talent-form-head" id="formHead">Step 1 of 3 &middot; About you</div>
+
+        <div class="form-progress">
+          <div class="form-progress-dot active" id="dot1"></div>
+          <div class="form-progress-dot" id="dot2"></div>
+          <div class="form-progress-dot" id="dot3"></div>
+        </div>
+
+        <!-- STEP 1: Personal -->
+        <div class="form-step active" id="step1">
+          <div class="form-field">
+            <label for="fullName">Full name</label>
+            <input type="text" id="fullName" placeholder="Priya Sharma" required>
+          </div>
+          <div class="form-field">
+            <label for="email">Work email</label>
+            <input type="email" id="email" placeholder="priya@example.com" required>
+          </div>
+          <div class="form-field">
+            <label for="location">Current location</label>
+            <input type="text" id="location" placeholder="Bengaluru, India">
+          </div>
+          <div class="form-field">
+            <label for="linkedin">LinkedIn URL (optional)</label>
+            <input type="url" id="linkedin" placeholder="https://linkedin.com/in/&hellip;">
+          </div>
+        </div>
+
+        <!-- STEP 2: Interests + experience -->
+        <div class="form-step" id="step2">
+          <div class="form-field">
+            <label>Areas of interest (select all that apply)</label>
+            <div class="interest-chips" id="interestChips">
+              <span class="interest-chip" data-v="license-optimisation">Licence Optimisation</span>
+              <span class="interest-chip" data-v="audit-defence">Audit Defence</span>
+              <span class="interest-chip" data-v="sam-baselining">SAM Baselining</span>
+              <span class="interest-chip" data-v="ai-spend">AI Spend Management</span>
+              <span class="interest-chip" data-v="ai-adoption">AI Adoption</span>
+              <span class="interest-chip" data-v="saas-management">SaaS Management</span>
+              <span class="interest-chip" data-v="cloud-finops">Cloud FinOps</span>
+              <span class="interest-chip" data-v="practice-leadership">Practice leadership</span>
+            </div>
+          </div>
+          <div class="form-field">
+            <label for="experience">Years of relevant experience</label>
+            <select id="experience">
+              <option value="">Select&hellip;</option>
+              <option>0&ndash;2 years</option>
+              <option>3&ndash;5 years</option>
+              <option>6&ndash;9 years</option>
+              <option>10&ndash;15 years</option>
+              <option>15+ years</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label for="vendors">Primary vendors / tools you&rsquo;ve worked with</label>
+            <input type="text" id="vendors" placeholder="e.g. Oracle ULA, Microsoft EA, ServiceNow SAM Pro">
+          </div>
+        </div>
+
+        <!-- STEP 3: Pitch + CV -->
+        <div class="form-step" id="step3">
+          <div class="form-field">
+            <label for="pitch">In two or three sentences &mdash; the most interesting SAM problem you&rsquo;ve ever solved.</label>
+            <textarea id="pitch" placeholder="Tell us the moment of insight, the contract clause, the audit you turned around &mdash; whatever stays with you."></textarea>
+          </div>
+          <div class="form-field">
+            <label>CV / Resume (optional)</label>
+            <label class="file-upload" for="cv">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              <div class="file-label">Drop file or click to upload</div>
+              <div class="file-hint">PDF, DOC, or DOCX &middot; max 5MB</div>
+              <input type="file" id="cv" accept=".pdf,.doc,.docx">
+            </label>
+            <div class="file-name" id="fileName"></div>
+          </div>
+        </div>
+
+        <!-- SUCCESS -->
+        <div class="form-success" id="formSuccess">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <h3>Submission received.</h3>
+          <p>Thank you. A member of the partnership will personally review your details within ten working days and respond directly to the email you&rsquo;ve provided.</p>
+        </div>
+
+        <div class="form-nav" id="formNav">
+          <button class="form-btn secondary" id="prevBtn" style="display:none;">Back</button>
+          <button class="form-btn primary" id="nextBtn">Continue &rarr;</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function() {
+  let step = 1;
+  const totalSteps = 3;
+  const stepHeads = ['Step 1 of 3 &middot; About you', 'Step 2 of 3 &middot; Areas of expertise', 'Step 3 of 3 &middot; Tell us your story'];
+
+  const nextBtn = document.getElementById('nextBtn');
+  const prevBtn = document.getElementById('prevBtn');
+
+  function showStep(n) {
+    document.querySelectorAll('.form-step').forEach((el, i) => {
+      el.classList.toggle('active', i === n - 1);
+    });
+    for (let i = 1; i <= totalSteps; i++) {
+      const dot = document.getElementById('dot' + i);
+      dot.classList.toggle('active', i === n);
+      dot.classList.toggle('done', i < n);
+    }
+    document.getElementById('formHead').innerHTML = stepHeads[n - 1];
+    prevBtn.style.display = n > 1 ? 'inline-block' : 'none';
+    nextBtn.textContent = n === totalSteps ? 'Submit application' : 'Continue →';
+  }
+
+  nextBtn.addEventListener('click', () => {
+    if (step < totalSteps) {
+      step++;
+      showStep(step);
+    } else {
+      // Submit
+      document.querySelectorAll('.form-step').forEach(el => el.classList.remove('active'));
+      document.getElementById('formSuccess').classList.add('active');
+      document.getElementById('formNav').style.display = 'none';
+      document.getElementById('formHead').innerHTML = 'Application complete';
+      document.querySelector('.form-progress').style.display = 'none';
+    }
+  });
+
+  prevBtn.addEventListener('click', () => {
+    if (step > 1) {
+      step--;
+      showStep(step);
+    }
+  });
+
+  // Interest chip toggle
+  document.querySelectorAll('.interest-chip').forEach(c => {
+    c.addEventListener('click', () => c.classList.toggle('active'));
+  });
+
+  // File upload feedback
+  const cvInput = document.getElementById('cv');
+  cvInput.addEventListener('change', e => {
+    const fn = document.getElementById('fileName');
+    if (e.target.files.length) {
+      fn.textContent = '✓ ' + e.target.files[0].name;
+      fn.classList.add('visible');
+    }
+  });
+})();
+</script>
+
+
+<!-- FOOTER (will be replaced by the standard footer when zipped — using consistent block from script) -->
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a href="index.html" class="logo" style="color: var(--cream);">proteam</a>
+        <h3>SAM specialists. Nothing else.</h3>
+        <p>An independent Software Asset Management consultancy serving enterprises across India, the UK, the US, and the Middle East.</p>
+        <div class="foot-social">
+          <div class="foot-social-label">Follow us on</div>
+          <div class="foot-social-icons">
+            <a href="#" aria-label="LinkedIn" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+            <a href="#" aria-label="X (Twitter)" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.53 3H21l-7.39 8.45L22.5 21h-6.83l-5.34-6.99L3.5 21H0l7.91-9.04L0.5 3h7l4.83 6.4L17.53 3zm-2.39 16h2.06L7.05 4.85H4.83L15.14 19z"/></svg></a>
+            <a href="#" aria-label="Instagram" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+            <a href="#" aria-label="YouTube" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="currentColor"/></svg></a>
+          </div>
+        </div>
+      </div>
+      <div class="foot-col">
+        <h5>Services</h5>
+        <ul>
+          <li><a href="service-license-optimization.html">Licence Optimisation</a></li>
+          <li><a href="service-audit-defence.html">Audit Defence</a></li>
+          <li><a href="service-sam-baselining.html">SAM Baselining</a></li>
+          <li><a href="service-ai-spend.html">AI Spend Management</a></li>
+          <li><a href="service-ai-adoption.html">AI Adoption &amp; Value</a></li>
+          <li><a href="service-saas-management.html">SaaS Management</a></li>
+          <li><a href="service-cloud-finops.html">Cloud FinOps</a></li>
+          <li><a href="services.html">All Services</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="about.html">About</a></li>
+          <li><a href="case-studies.html">Case Studies</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="insights.html">Insights</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="careers.html">Careers</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5>Get in touch</h5>
+        <address>
+          Suite #309&ndash;312<br>
+          KTC Illumination Towers<br>
+          Madhapur, Hyderabad<br>
+          Telangana, India<br><br>
+          <a href="tel:+919676889797">+91 9676 889 797</a><br>
+          <a href="mailto:vpatel@proteamadvisory.com">vpatel@proteamadvisory.com</a>
+        </address>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <div>&copy; 2026 Proteam Advisory. All rights reserved.</div>
+      <div style="display:flex; gap:24px; flex-wrap:wrap;">
+        <a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function() {
+  const toggle = document.getElementById("menuToggle");
+  const mobileNav = document.getElementById("mobileNav");
+  function openMenu() {
+    mobileNav.style.display = "flex";
+    requestAnimationFrame(() => mobileNav.classList.add("is-open"));
+    toggle.classList.add("is-active");
+    toggle.setAttribute("aria-expanded", "true");
+    document.body.style.overflow = "hidden";
+  }
+  function closeMenu() {
+    mobileNav.classList.remove("is-open");
+    toggle.classList.remove("is-active");
+    toggle.setAttribute("aria-expanded", "false");
+    document.body.style.overflow = "";
+    setTimeout(() => { if (!mobileNav.classList.contains("is-open")) mobileNav.style.display = "none"; }, 300);
+  }
+  toggle.addEventListener("click", () => {
+    if (mobileNav.classList.contains("is-open")) closeMenu(); else openMenu();
+  });
+  document.querySelectorAll(".mobile-nav-links a, .mobile-nav-cta").forEach(a => {
+    a.addEventListener("click", closeMenu);
+  });
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape" && mobileNav.classList.contains("is-open")) closeMenu();
+  });
+})();
+</script>
+</body>
+</html>

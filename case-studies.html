@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Case Studies — Proteam Advisory</title>
+<meta name="description" content="Real client outcomes. €420K saved on Symantec, $40M on IBM ECM, $100M on IBM optimisation, £1M on IBM audit, $4.5M on Maximo. Anonymised for confidentiality." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+
+<style>
+  /* CASE STUDIES */
+  .cs-summary {
+    background: var(--paper);
+    padding: 80px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .cs-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .cs-stat {
+    padding: 40px 32px;
+    border-right: 1px solid var(--line);
+    text-align: left;
+  }
+  .cs-stat:last-child { border-right: none; }
+  .cs-stat .num {
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 48px;
+    line-height: 1;
+    color: var(--rust);
+    margin-bottom: 8px;
+    letter-spacing: -0.03em;
+    font-variation-settings: "opsz" 144;
+  }
+  .cs-stat .lbl {
+    font-size: 13px;
+    color: var(--navy-soft);
+    line-height: 1.5;
+  }
+  @media (max-width: 768px) {
+    .cs-stats { grid-template-columns: 1fr 1fr; }
+    .cs-stat:nth-child(2) { border-right: none; }
+    .cs-stat:nth-child(1), .cs-stat:nth-child(2) { border-bottom: 1px solid var(--line); }
+  }
+
+  /* CASE STUDY CARDS */
+  .cs-list {
+    background: var(--paper);
+    padding: 100px 0;
+  }
+  .cs-list-head {
+    margin-bottom: 64px;
+    max-width: 760px;
+  }
+  .cs-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .cs-card {
+    background: var(--cream);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+  .cs-card:hover {
+    border-color: var(--amber);
+    box-shadow: 0 24px 48px -16px rgba(11,31,58,0.18);
+    transform: translateY(-3px);
+  }
+  .cs-card-inner {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 0;
+  }
+  .cs-card-side {
+    background: var(--navy);
+    color: var(--cream);
+    padding: 40px 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+  .cs-card-side::before {
+    content: '';
+    position: absolute;
+    top: -30%;
+    right: -30%;
+    width: 250px; height: 250px;
+    background: radial-gradient(circle, var(--amber) 0%, transparent 65%);
+    opacity: 0.2;
+    border-radius: 50%;
+  }
+  .cs-card-tag {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--amber-bright);
+    font-weight: 600;
+    margin-bottom: 24px;
+    padding: 4px 10px;
+    border: 1px solid var(--amber-bright);
+    border-radius: 2px;
+    align-self: flex-start;
+    position: relative;
+  }
+  .cs-card-result {
+    position: relative;
+  }
+  .cs-card-result-label {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(244,239,230,0.6);
+    margin-bottom: 12px;
+  }
+  .cs-card-result-num {
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 56px;
+    line-height: 0.95;
+    color: var(--cream);
+    letter-spacing: -0.04em;
+    font-variation-settings: "opsz" 144;
+  }
+  .cs-card-result-num span { color: var(--amber-bright); }
+  .cs-card-result-desc {
+    font-size: 13px;
+    color: rgba(244,239,230,0.7);
+    margin-top: 16px;
+    line-height: 1.5;
+  }
+
+  .cs-card-body {
+    padding: 40px 44px;
+  }
+  .cs-card-vendor {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--amber);
+    font-weight: 600;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .cs-card-vendor::before {
+    content: '';
+    width: 24px; height: 1px;
+    background: var(--amber);
+  }
+  .cs-card-body h3 {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: clamp(24px, 2.6vw, 32px);
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    color: var(--navy);
+    margin-bottom: 8px;
+    font-variation-settings: "opsz" 144;
+  }
+  .cs-card-client {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 24px;
+    font-style: italic;
+    font-family: var(--sans);
+    font-variation-settings: "opsz" 144;
+  }
+  .cs-narrative {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+  }
+  .cs-narrative-block h5 {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--navy);
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .cs-narrative-block p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--navy-soft);
+  }
+  @media (max-width: 960px) {
+    .cs-card-inner { grid-template-columns: 1fr; }
+    .cs-card-side { padding: 32px 28px; }
+    .cs-card-body { padding: 32px 28px; }
+    .cs-narrative { grid-template-columns: 1fr; gap: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div class="container">
+    <div class="top-bar-left">
+      <span class="top-bar-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+        <a href="tel:+919676889797">+91 9676 889 797</a>
+      </span>
+      <span class="top-bar-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <a href="mailto:vpatel@proteamadvisory.com">vpatel@proteamadvisory.com</a>
+      </span>
+    </div>
+    <div class="top-bar-right">
+      <span class="top-bar-item">Hyderabad · Serving Global Enterprises</span>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="container nav">
+    <a href="index.html" class="logo">proteam</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="case-studies.html" class="active">Case Studies</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <a href="contact.html" class="nav-cta">Free Consultation</a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+  </div>
+</header>
+<!-- MOBILE NAV -->
+<nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+  <ul class="mobile-nav-links">
+    <li><a href="index.html" >Home <span>→</span></a></li>
+    <li><a href="about.html" >About <span>→</span></a></li>
+    <li><a href="services.html" >Services <span>→</span></a></li>
+    <li><a href="case-studies.html" class="active">Case Studies <span>→</span></a></li>
+    <li><a href="contact.html" >Contact <span>→</span></a></li>
+  </ul>
+  <a href="contact.html" class="mobile-nav-cta">Book Free Consultation →</a>
+  <div class="mobile-nav-contact">
+    <a href="tel:+919676889797">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+      +91 9676 889 797
+    </a>
+    <a href="mailto:vpatel@proteamadvisory.com">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      vpatel@proteamadvisory.com
+    </a>
+  </div>
+</nav>
+
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a>
+      <span class="sep">/</span>
+      <span class="current">Case Studies</span>
+    </div>
+    <div class="page-hero-grid">
+      <div>
+        <div class="page-hero-eyebrow">Selected client outcomes</div>
+        <h1>The work, <em>by the numbers</em>.</h1>
+      </div>
+      <p class="page-hero-lede">
+        Seven recent engagements across IBM, Oracle, Microsoft, Symantec, and Maximo. Real situations, real numbers — anonymised at our clients' request.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- SUMMARY STATS -->
+<div class="cs-summary">
+  <div class="container">
+    <div class="cs-stats">
+      <div class="cs-stat">
+        <div class="num">€420K</div>
+        <div class="lbl">Symantec optimisation, European auto manufacturer</div>
+      </div>
+      <div class="cs-stat">
+        <div class="num">$23M</div>
+        <div class="lbl">Microsoft baselining risk identified, North American bank</div>
+      </div>
+      <div class="cs-stat">
+        <div class="num">$40M+</div>
+        <div class="lbl">IBM ECM audit defence, US investment bank</div>
+      </div>
+      <div class="cs-stat">
+        <div class="num">$100M+</div>
+        <div class="lbl">IBM ECM optimisation, US Fortune 500 client</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CASE STUDIES -->
+<section class="cs-list">
+  <div class="container">
+    <div class="cs-list-head reveal">
+      <div class="section-eyebrow">Selected engagements</div>
+      <h2 class="section-title">Seven recent <em>client outcomes</em>.</h2>
+      <p class="section-lede">A small selection from our managed-service and project-based work — chosen to show breadth across vendor, geography, and engagement type.</p>
+    </div>
+
+    <div class="cs-grid">
+
+      <!-- CASE 01 — IBM ECM optimisation $100M -->
+      <article class="cs-card reveal">
+        <div class="cs-card-inner">
+          <div class="cs-card-side">
+            <span class="cs-card-tag">Licence Optimisation</span>
+            <div class="cs-card-result">
+              <div class="cs-card-result-label">Total client savings</div>
+              <div class="cs-card-result-num"><span>$100M+</span></div>
+              <div class="cs-card-result-desc">Captured in 4 months — after the client's internal team had spent 2–3 years on the same problem.</div>
+            </div>
+          </div>
+          <div class="cs-card-body">
+            <div class="cs-card-vendor">IBM Enterprise Content Management</div>
+            <h3>From a 2-year stalemate to $100M in 4 months.</h3>
+            <p class="cs-card-client">Fortune 500 enterprise · IBM ECM estate accumulated over 10–15 years through M&amp;A</p>
+
+            <div class="cs-narrative">
+              <div class="cs-narrative-block">
+                <h5>Situation</h5>
+                <p>Years of departmental-level IBM purchases combined with mergers and acquisitions had created a tangled set of contractual restrictions. The client's contract and legal teams had engaged directly with IBM for 2–3 years without resolution.</p>
+              </div>
+              <div class="cs-narrative-block">
+                <h5>Action</h5>
+                <p>We reviewed every contract, validated every entitlement, interviewed key stakeholders to understand actual usage, then designed a solution that resolved the departmental restriction while optimising licences across the enterprise.</p>
+              </div>
+              <div class="cs-narrative-block">
+                <h5>Result</h5>
+                <p>Within four months of formal engagement, the optimisation programme delivered savings exceeding $100 million — a structural fix to a problem that had defeated the client's internal effort for years.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- CASE 02 — IBM ECM audit defence $40M -->
+      <article class="cs-card reveal">
+        <div class="cs-card-inner">
+          <div class="cs-card-side">
+            <span class="cs-card-tag">Audit Defence</span>
+            <div class="cs-card-result">
+              <div class="cs-card-result-label">Audit exposure neutralised</div>
+              <div class="cs-card-result-num"><span>$40M</span></div>
+              <div class="cs-card-result-desc">Negotiated within 8 weeks of engagement — after the client's internal team had spent 5 months without progress.</div>
+            </div>
+          </div>
+          <div class="cs-card-body">
+            <div class="cs-card-vendor">IBM Audit Defence</div>
+            <h3>$40M of audit exposure, settled in 8 weeks.</h3>
+            <p class="cs-card-client">Leading US multinational investment bank · 300,000+ employees · 330M+ customers worldwide</p>
+
+            <div class="cs-narrative">
+              <div class="cs-narrative-block">
+                <h5>Situation</h5>
+                <p>The client was being audited by IBM in the area of Enterprise Content Management. Significant non-compliance findings had been raised. After 5 months of unsuccessful internal defence efforts, our team was brought in.</p>
+              </div>
+              <div class="cs-narrative-block">
+                <h5>Action</h5>
+                <p>We assessed the environment using our proprietary licensing methodology, compared findings against the auditor's, and quickly identified that the licensing metrics applied diverged from the methodology in the contract. We then engaged IBM directly.</p>
+              </div>
+              <div class="cs-narrative-block">
+                <h5>Result</h5>
+                <p>Within 8 weeks of formal engagement, we negotiated over $40 million in immediate, bottom-line cost savings — a structural settlement that closed the audit and restored normal commercial relations with IBM.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- CASE 03 — Microsoft baselining $23M -->
+      <article class="cs-card reveal">
+        <div class="cs-card-inner">
+          <div class="cs-card-side">
+            <span class="cs-card-tag">Baselining</span>
+            <div class="cs-card-result">
+              <div class="cs-card-result-label">Risk identified</div>
+              <div class="cs-card-result-num"><span>$23M</span></div>
+              <div class="cs-card-result-desc">Of which $3M was elected for immediate remediation — ahead of the EA true-up cycle.</div>
+            </div>
+          </div>
+          <div class="cs-card-body">
+            <div class="cs-card-vendor">Microsoft Baselining</div>
+            <h3>Baselining ahead of an EA true-up — $23M of risk surfaced.</h3>
+            <p class="cs-card-client">Large North American bank · 12,000+ servers · 67,000+ workstations · decentralised IT &amp; procurement</p>
+
+            <div class="cs-narrative">
+              <div class="cs-narrative-block">
+                <h5>Situation</h5>
+                <p>The client elected to be proactive ahead of their Microsoft Enterprise Agreement true-up cycle. With completely decentralised IT and procurement — and security concerns about data sharing — they needed a defensible baseline before facing Microsoft.</p>
+              </div>
+              <div class="cs-narrative-block">
+                <h5>Action</h5>
+                <p>We reconciled contracts, scanned invoices, Install Base Reports and entitlement data — comparing user requirements per business unit against the available licence pool, despite the client's data-segmentation requirements.</p>
+              </div>
+              <div class="cs-narrative-block">
+                <h5>Result</h5>
+                <p>$23M in unnecessary licence risk identified; the client elected to remediate $3M immediately. We also flagged 8 software products critically out of support across 5,000+ installs — driving the next phase of remediation.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- CASE 04 — Symantec/Veritas €420K -->
+      <article class="cs-card reveal">
+        <div class="cs-card-inner">
+          <div class="cs-card-side">
+            <span class="cs-card-tag">Licence Optimisation</span>
+            <div class="cs-card-result">
+              <div class="cs-card-result-label">Annual savings</div>
+              <div class="cs-card-result-num"><span>€420K</span></div>
+              <div class="cs-card-result-desc">Roadmap delivered in 8 weeks — leading to a recurring half-yearly engagement.</div>
+            </div>
+          </div>
+          <div class="cs-card-body">
+            <div class="cs-card-vendor">Symantec / Veritas</div>
+            <h3>Recurring savings on a multi-business-unit Symantec estate.</h3>
+            <p class="cs-card-client">Large European automotive manufacturer · 4 business units · multi-region deployment</p>
+
+            <div class="cs-narrative">
+              <div class="cs-narrative-block">
+                <h5>Situation</h5>
+                <p>The client was concerned its departments were not using Symantec/Veritas licences efficiently and wanted to reduce software spend by optimising assets across all four business units.</p>
+              </div>
+              <div class="cs-narrative-block">
+                <h5>Action</h5>
+                <p>We analysed contracts, spreadsheets, scanned invoices, Install Base Reports and entitlement data. User requirements per business unit were identified and compared against the available licence pool to surface waste and tier-mismatches.</p>
+              </div>
+              <div class="cs-narrative-block">
+                <h5>Result</h5>
+                <p>Within 8 weeks, we delivered a roadmap recognising over €420,000 in savings. The client subsequently engaged us to manage and optimise their Symantec environment twice a year — converting one project into recurring managed services.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- CASE 05 — IBM UK IP firm £1M+ -->
+      <article class="cs-card reveal">
+        <div class="cs-card-inner">
+          <div class="cs-card-side">
+            <span class="cs-card-tag">Audit Defence</span>
+            <div class="cs-card-result">
+              <div class="cs-card-result-label">Audit savings</div>
+              <div class="cs-card-result-num"><span>£1M+</span></div>
+              <div class="cs-card-result-desc">Captured in less than two weeks of engagement.</div>
+            </div>
+          </div>
+          <div class="cs-card-body">
+            <div class="cs-card-vendor">IBM Audit Defence</div>
+            <h3>£1M+ saved in under two weeks during an IBM audit.</h3>
+            <p class="cs-card-client">Leading intellectual property management company · UK-headquartered · global operations</p>
+
+            <div class="cs-narrative">
+              <div class="cs-narrative-block">
+                <h5>Situation</h5>
+                <p>The client was being audited by IBM and was unfamiliar with the complex licensing rules at play. The internal team felt overwhelmed and needed specialists to position their case, optimise usage, and lead vendor negotiation.</p>
+              </div>
+              <div class="cs-narrative-block">
+                <h5>Action</h5>
+                <p>We scanned the network and inventoried every IBM installation in under a week — accounting for bundling and other licensing mechanics. In parallel, we reconciled software contracts against IBM's data, identified discrepancies, and proposed optimisation techniques.</p>
+              </div>
+              <div class="cs-narrative-block">
+                <h5>Result</h5>
+                <p>In under two weeks, more than £1,000,000 was saved from the audit defence work alone. We also designed forward-looking optimisation techniques that would save the client further millions over the following years.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- CASE 06 — JD Edwards $1.5M + $0.4M -->
+      <article class="cs-card reveal">
+        <div class="cs-card-inner">
+          <div class="cs-card-side">
+            <span class="cs-card-tag">Licence Optimisation</span>
+            <div class="cs-card-result">
+              <div class="cs-card-result-label">Risk + recurring saving</div>
+              <div class="cs-card-result-num"><span>$1.9M</span></div>
+              <div class="cs-card-result-desc">$1.5M risk remediated, plus $0.4M recurring annual saving.</div>
+            </div>
+          </div>
+          <div class="cs-card-body">
+            <div class="cs-card-vendor">JD Edwards EnterpriseOne</div>
+            <h3>15-year ERP deployment, untangled and optimised.</h3>
+            <p class="cs-card-client">Large US commercial real estate management firm · multiple subsidiaries &amp; affiliates</p>
+
+            <div class="cs-narrative">
+              <div class="cs-narrative-block">
+                <h5>Situation</h5>
+                <p>A 15-year-old JD Edwards EnterpriseOne deployment had become unclear in terms of consumption and cost allocation, following years of acquisitions and divestitures. The client wanted to review software consumption and rebuild controls.</p>
+              </div>
+              <div class="cs-narrative-block">
+                <h5>Action</h5>
+                <p>We performed a deep-dive analysis of every historic agreement, leveraging deep knowledge of contract evolution. We then analysed software consumption across subsidiaries and affiliates using customised tools, surfacing future savings and a tracking framework.</p>
+              </div>
+              <div class="cs-narrative-block">
+                <h5>Result</h5>
+                <p>$1.5M of financial risk identified from inadvertent unauthorised use — proactively remediated through licence renegotiation. A further $0.4M in recurring annual savings unlocked through harvesting unused entitlements, plus a new cost-allocation tracking mechanism.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- CASE 07 — Maximo $4.5M -->
+      <article class="cs-card reveal">
+        <div class="cs-card-inner">
+          <div class="cs-card-side">
+            <span class="cs-card-tag">Licence Optimisation</span>
+            <div class="cs-card-result">
+              <div class="cs-card-result-label">Roadmap savings</div>
+              <div class="cs-card-result-num"><span>$4.5M</span></div>
+              <div class="cs-card-result-desc">Identified and roadmapped in 3 months across a complex Maximo deployment.</div>
+            </div>
+          </div>
+          <div class="cs-card-body">
+            <div class="cs-card-vendor">IBM Maximo</div>
+            <h3>Optimising Maximo across 5,000+ users in a multi-vertical utility.</h3>
+            <p class="cs-card-client">Multinational utility company · 150,000+ employees · 5,000+ Maximo users · electricity, gas, renewables</p>
+
+            <div class="cs-narrative">
+              <div class="cs-narrative-block">
+                <h5>Situation</h5>
+                <p>The client engaged us to proactively review their Maximo Asset Management deployment — their primary asset management solution — and identify optimisation opportunities across an estate that was integrated with their ERP and many third-party tools.</p>
+              </div>
+              <div class="cs-narrative-block">
+                <h5>Action</h5>
+                <p>We reverse-engineered the deployment and its integration footprint, then analysed Maximo deployments through a variety of consumption reports — surfacing several issues in access configuration and third-party integration.</p>
+              </div>
+              <div class="cs-narrative-block">
+                <h5>Result</h5>
+                <p>Within 3 months, a detailed roadmap delivered for over $4.5M in savings — driven by remediating improper access configuration and tightening controls over third-party software integration touchpoints.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS BAND -->
+<section style="background: var(--cream); padding: 90px 0; border-top: 1px solid var(--line);">
+  <div class="container">
+    <div class="reveal" style="max-width: 760px; margin-bottom: 56px;">
+      <div class="section-eyebrow">In the words of clients</div>
+      <h2 class="section-title">The case studies in <em>their words</em>.</h2>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;" class="reveal-stagger">
+      <div style="background: var(--paper); border: 1px solid var(--line); padding: 36px 32px; border-radius: 4px;">
+        <div style="font-family: var(--sans); font-size: 56px; line-height: 0.6; color: var(--amber); margin-bottom: 24px;">"</div>
+        <p style="font-family: var(--sans); font-size: 18px; line-height: 1.5; color: var(--navy); margin-bottom: 28px; font-variation-settings: 'opsz' 144;">Proteam are experts on licensing knowledge for all major vendors and have experience with all major SAM tools. We have the luxury of delivering managed services and regular SAM work, all under one roof.</p>
+        <div style="padding-top: 20px; border-top: 1px solid var(--line); display: flex; align-items: center; gap: 14px;">
+          <div style="width: 44px; height: 44px; border-radius: 50%; background: var(--navy); color: var(--cream); display: flex; align-items: center; justify-content: center; font-family: var(--sans); font-style: italic; font-size: 18px;">K</div>
+          <div>
+            <div style="font-weight: 600; color: var(--navy);">Keith Richardson</div>
+            <div style="font-size: 12px; color: var(--muted); margin-top: 2px;">Bytes UK</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="background: var(--paper); border: 1px solid var(--line); padding: 36px 32px; border-radius: 4px;">
+        <div style="font-family: var(--sans); font-size: 56px; line-height: 0.6; color: var(--amber); margin-bottom: 24px;">"</div>
+        <p style="font-family: var(--sans); font-size: 18px; line-height: 1.5; color: var(--navy); margin-bottom: 28px; font-variation-settings: 'opsz' 144;">We delivered a final report to a customer highlighting a post-remediation saving of $6.3 million. With Proteam's help we reviewed 18 vendors across 7,000 servers in less than two months. Tremendous effort.</p>
+        <div style="padding-top: 20px; border-top: 1px solid var(--line); display: flex; align-items: center; gap: 14px;">
+          <div style="width: 44px; height: 44px; border-radius: 50%; background: var(--navy); color: var(--cream); display: flex; align-items: center; justify-content: center; font-family: var(--sans); font-style: italic; font-size: 18px;">E</div>
+          <div>
+            <div style="font-weight: 600; color: var(--navy);">Eric Chiu</div>
+            <div style="font-size: 12px; color: var(--muted); margin-top: 2px;">Fisher IT Asset Consulting</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="background: var(--paper); border: 1px solid var(--line); padding: 36px 32px; border-radius: 4px;">
+        <div style="font-family: var(--sans); font-size: 56px; line-height: 0.6; color: var(--amber); margin-bottom: 24px;">"</div>
+        <p style="font-family: var(--sans); font-size: 18px; line-height: 1.5; color: var(--navy); margin-bottom: 28px; font-variation-settings: 'opsz' 144;">Just wanted to pass on my thanks. You have been a great support during the IBM audit. Today, IBM confirmed zero compliance issues — the pointers your team gave created that opportunity.</p>
+        <div style="padding-top: 20px; border-top: 1px solid var(--line); display: flex; align-items: center; gap: 14px;">
+          <div style="width: 44px; height: 44px; border-radius: 50%; background: var(--navy); color: var(--cream); display: flex; align-items: center; justify-content: center; font-family: var(--sans); font-style: italic; font-size: 18px;">G</div>
+          <div>
+            <div style="font-weight: 600; color: var(--navy);">Global SAM Leader</div>
+            <div style="font-size: 12px; color: var(--muted); margin-top: 2px;">Specialist recruitment company</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="container">
+    <div class="cta-inner">
+      <div class="reveal">
+        <div class="section-eyebrow" style="color: var(--amber-bright);">Want results like these?</div>
+        <h2>Let's see what's <em>hiding in your estate</em>.</h2>
+        <p>Every case study above started the same way — with a 30-minute conversation. Book your free SAM consultation. No obligation, no sales pitch. Just a senior consultant who's spent a career inside enterprises like yours.</p>
+        <div class="cta-actions">
+          <a href="contact.html" class="btn-amber">Book free consultation</a>
+          <a href="services.html" class="btn-line">Explore services</a>
+        </div>
+      </div>
+      <div class="cta-detail reveal">
+        <h4>Browse by service</h4>
+        <ul class="cta-list">
+          <li><a href="service-license-optimization.html" style="color: inherit; border-bottom: 1px solid rgba(244,239,230,0.3);">Licence Optimisation</a></li>
+          <li><a href="service-audit-defence.html" style="color: inherit; border-bottom: 1px solid rgba(244,239,230,0.3);">Audit Defence</a></li>
+          <li><a href="service-sam-baselining.html" style="color: inherit; border-bottom: 1px solid rgba(244,239,230,0.3);">SAM Baselining &amp; Managed Services</a></li>
+          <li><a href="services.html" style="color: inherit; border-bottom: 1px solid rgba(244,239,230,0.3);">View all services</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a href="index.html" class="logo" style="color: var(--cream);">proteam</a>
+        <h3>SAM specialists. Nothing else.</h3>
+        <p>An independent Software Asset Management consultancy serving enterprises across India, the UK, the US, and the Middle East.</p>
+
+        <div class="foot-social">
+          <div class="foot-social-label">Follow us on</div>
+          <div class="foot-social-icons">
+            <a href="#" aria-label="LinkedIn" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+            <a href="#" aria-label="X (Twitter)" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.53 3H21l-7.39 8.45L22.5 21h-6.83l-5.34-6.99L3.5 21H0l7.91-9.04L0.5 3h7l4.83 6.4L17.53 3zm-2.39 16h2.06L7.05 4.85H4.83L15.14 19z"/></svg>
+            </a>
+            <a href="#" aria-label="Instagram" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+            <a href="#" aria-label="YouTube" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="currentColor"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="foot-col">
+        <h5>Services</h5>
+        <ul>
+          <li><a href="service-license-optimization.html">Licence Optimisation</a></li>
+          <li><a href="service-audit-defence.html">Audit Defence</a></li>
+          <li><a href="service-sam-baselining.html">SAM Baselining</a></li>
+          <li><a href="service-ai-spend.html">AI Spend Management</a></li>
+          <li><a href="service-ai-adoption.html">AI Adoption &amp; Value</a></li>
+          <li><a href="service-saas-management.html">SaaS Management</a></li>
+          <li><a href="service-cloud-finops.html">Cloud FinOps</a></li>
+          <li><a href="services.html">All Services</a></li>
+        </ul>
+      </div>
+
+      <div class="foot-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="about.html">About</a></li>
+          <li><a href="case-studies.html">Case Studies</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="insights.html">Insights</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="careers.html">Careers</a></li>
+        </ul>
+      </div>
+
+      <div class="foot-col">
+        <h5>Get in touch</h5>
+        <address>
+          Suite #309&ndash;312<br>
+          KTC Illumination Towers<br>
+          Madhapur, Hyderabad<br>
+          Telangana, India<br><br>
+          <a href="tel:+919676889797">+91 9676 889 797</a><br>
+          <a href="mailto:vpatel@proteamadvisory.com">vpatel@proteamadvisory.com</a>
+        </address>
+      </div>
+    </div>
+
+    <div class="foot-bot">
+      <div>&copy; 2026 Proteam Advisory. All rights reserved.</div>
+      <div style="display:flex; gap:24px; flex-wrap:wrap;">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Cookies</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ---- Scroll reveal ----
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add("in"); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+  document.querySelectorAll(".reveal, .reveal-stagger").forEach(el => obs.observe(el));
+
+  // ---- Smooth scroll ----
+  document.querySelectorAll("a[href^='#']").forEach(link => {
+    link.addEventListener("click", e => {
+      const id = link.getAttribute("href");
+      if (id.length > 1) { const tgt = document.querySelector(id); if (tgt) { e.preventDefault(); tgt.scrollIntoView({ behavior: "smooth", block: "start" }); } }
+    });
+  });
+
+  // ---- Mobile menu ----
+  const toggle = document.getElementById("menuToggle");
+  const mobileNav = document.getElementById("mobileNav");
+  function openMenu() {
+    mobileNav.style.display = "flex";
+    requestAnimationFrame(() => mobileNav.classList.add("is-open"));
+    toggle.classList.add("open");
+    toggle.setAttribute("aria-expanded", "true");
+    document.body.style.overflow = "hidden";
+  }
+  function closeMenu() {
+    mobileNav.classList.remove("is-open");
+    toggle.classList.remove("open");
+    toggle.setAttribute("aria-expanded", "false");
+    document.body.style.overflow = "";
+    setTimeout(() => { if (!mobileNav.classList.contains("is-open")) mobileNav.style.display = "none"; }, 350);
+  }
+  toggle.addEventListener("click", () => mobileNav.classList.contains("is-open") ? closeMenu() : openMenu());
+  mobileNav.querySelectorAll("a").forEach(link => link.addEventListener("click", closeMenu));
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && mobileNav.classList.contains("is-open")) closeMenu(); });
+</script>
+</body>
+</html>

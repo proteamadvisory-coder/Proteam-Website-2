@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Shadow AI inventory: a 2026 audit playbook for CIOs — Proteam Advisory</title>
+<meta name="description" content="Browser-based AI tools, departmental Cursor seats, embedded agent licences inside SaaS contracts you already own. A four-step discovery sweep that takes a " />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+
+<style>
+  /* ===== ARTICLE PAGE ===== */
+  .article-hero {
+    background: var(--paper);
+    padding: 72px 0 56px;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+  }
+  .article-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle at 1px 1px, rgba(11,31,58,0.06) 1px, transparent 0);
+    background-size: 32px 32px;
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+    pointer-events: none;
+  }
+  .article-breadcrumb {
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 24px;
+    position: relative;
+    z-index: 1;
+  }
+  .article-breadcrumb a { color: var(--muted); text-decoration: none; }
+  .article-breadcrumb a:hover { color: var(--navy); }
+  .article-breadcrumb .sep { margin: 0 10px; opacity: 0.5; }
+  .article-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+  }
+  .article-tag::before { content: ''; width: 24px; height: 1px; background: var(--amber); }
+  .article-title {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: clamp(36px, 5vw, 64px);
+    line-height: 1.04;
+    letter-spacing: -0.022em;
+    color: var(--navy);
+    max-width: 980px;
+    margin-bottom: 28px;
+    font-variation-settings: "opsz" 144;
+    position: relative;
+    z-index: 1;
+  }
+  .article-title em { font-family: var(--serif); font-variation-settings: "opsz" 144; font-style: italic; color: var(--rust); font-weight: 300; }
+  .article-lede {
+    font-family: var(--sans);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(18px, 1.6vw, 22px);
+    line-height: 1.5;
+    color: var(--navy-soft);
+    max-width: 760px;
+    margin-bottom: 36px;
+    position: relative;
+    z-index: 1;
+    font-variation-settings: "opsz" 36;
+  }
+  .article-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 18px;
+    padding-top: 28px;
+    border-top: 1px solid var(--line);
+    font-size: 13px;
+    color: var(--muted);
+    position: relative;
+    z-index: 1;
+  }
+  .article-meta .author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--navy);
+  }
+  .article-meta .author-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--navy);
+    color: var(--cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--sans);
+    font-style: italic;
+    font-size: 15px;
+  }
+  .article-meta .author-name { font-weight: 500; }
+  .article-meta .sep { opacity: 0.4; }
+
+  /* === ARTICLE BODY === */
+  .article-body {
+    background: var(--paper);
+    padding: 80px 0 100px;
+  }
+  .article-body .container { max-width: 820px; }
+  .article-body p,
+  .article-body h2,
+  .article-body h3,
+  .article-body ul,
+  .article-body ol,
+  .article-body .pullquote,
+  .article-body .takeaway-box {
+    max-width: 760px;
+  }
+  .article-body p {
+    font-size: 18px;
+    line-height: 1.72;
+    color: var(--navy);
+    margin-bottom: 26px;
+  }
+  .article-body p strong { color: var(--navy); font-weight: 600; }
+  .article-body p em { font-family: var(--serif); font-variation-settings: "opsz" 144; font-style: italic; color: var(--rust); }
+  .article-body h2 {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: clamp(26px, 2.6vw, 34px);
+    line-height: 1.18;
+    letter-spacing: -0.015em;
+    color: var(--navy);
+    margin: 56px 0 24px;
+    font-variation-settings: "opsz" 144;
+  }
+  .article-body h2 em { font-family: var(--serif); font-variation-settings: "opsz" 144; font-style: italic; color: var(--rust); font-weight: 300; }
+  .article-body h3 {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 18px;
+    color: var(--navy);
+    margin: 36px 0 16px;
+    letter-spacing: -0.005em;
+  }
+  .article-body ul, .article-body ol {
+    margin: 0 0 26px 24px;
+    padding-left: 4px;
+  }
+  .article-body li {
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--navy);
+    margin-bottom: 10px;
+  }
+  .article-body li::marker { color: var(--amber); }
+
+  /* Pull quote */
+  .pullquote {
+    background: var(--cream);
+    border-left: 3px solid var(--amber);
+    padding: 32px 40px;
+    margin: 48px 0;
+    border-radius: 0 4px 4px 0;
+  }
+  .pullquote p {
+    font-family: var(--sans);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 1.45;
+    color: var(--navy);
+    margin: 0;
+    font-variation-settings: "opsz" 36;
+  }
+  .pullquote p::before { content: '"'; color: var(--amber); margin-right: 4px; }
+  .pullquote p::after { content: '"'; color: var(--amber); margin-left: 4px; }
+
+  /* Takeaway box */
+  .takeaway-box {
+    background: var(--navy);
+    color: var(--cream);
+    padding: 36px 40px;
+    border-radius: 4px;
+    margin: 48px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .takeaway-box::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 240px; height: 240px;
+    background: radial-gradient(circle, rgba(200,147,43,0.18) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .takeaway-box .label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 1;
+  }
+  .takeaway-box h3 {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 1.3;
+    color: var(--cream);
+    margin: 0 0 16px;
+    font-variation-settings: "opsz" 36;
+    position: relative;
+    z-index: 1;
+  }
+  .takeaway-box ul {
+    margin: 0;
+    padding-left: 20px;
+    position: relative;
+    z-index: 1;
+  }
+  .takeaway-box li {
+    color: rgba(244,239,230,0.9);
+    font-size: 16px;
+    line-height: 1.65;
+    margin-bottom: 8px;
+  }
+  .takeaway-box li::marker { color: var(--amber); }
+
+  /* Inline CTA */
+  .inline-cta {
+    margin: 56px 0;
+    padding: 36px 40px;
+    background: var(--cream);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .inline-cta-text {
+    font-family: var(--sans);
+    font-size: 19px;
+    line-height: 1.4;
+    color: var(--navy);
+    flex: 1;
+    min-width: 280px;
+    font-variation-settings: "opsz" 36;
+  }
+  .inline-cta-text em { font-family: var(--serif); font-variation-settings: "opsz" 144; font-style: italic; color: var(--rust); }
+  .inline-cta-btn {
+    background: var(--navy);
+    color: var(--cream);
+    padding: 14px 28px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+  .inline-cta-btn:hover { background: var(--navy-soft); transform: translateY(-1px); }
+
+  /* === READ NEXT === */
+  .read-next {
+    background: var(--cream);
+    padding: 96px 0 80px;
+    border-top: 1px solid var(--line);
+  }
+  .read-next-head {
+    margin-bottom: 48px;
+  }
+  .read-next-head .label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 16px;
+    font-weight: 600;
+  }
+  .read-next-head h2 {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: clamp(28px, 3vw, 40px);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--navy);
+    font-variation-settings: "opsz" 144;
+  }
+  .read-next-head h2 em { font-family: var(--serif); font-variation-settings: "opsz" 144; font-style: italic; color: var(--rust); font-weight: 300; }
+  .read-next-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .next-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 32px 28px;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .next-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 2px;
+    background: var(--amber);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+  .next-card:hover {
+    border-color: var(--navy);
+    transform: translateY(-3px);
+    box-shadow: 0 18px 40px -16px rgba(11,31,58,0.15);
+  }
+  .next-card:hover::before { transform: scaleX(1); }
+  .next-card .meta {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .next-card .meta .tag { color: var(--amber); font-weight: 600; }
+  .next-card h3 {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 1.25;
+    color: var(--navy);
+    margin-bottom: 14px;
+    font-variation-settings: "opsz" 36;
+    flex: 1;
+  }
+  .next-card h3 em { font-family: var(--serif); font-variation-settings: "opsz" 144; font-style: italic; color: var(--rust); }
+  .next-card .arrow {
+    margin-top: auto;
+    font-size: 13px;
+    color: var(--rust);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: gap 0.25s ease;
+  }
+  .next-card:hover .arrow { gap: 14px; }
+
+  /* === FINAL CTA === */
+  .article-final-cta {
+    background: var(--navy);
+    color: var(--cream);
+    padding: 100px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .article-final-cta::before {
+    content: '';
+    position: absolute;
+    top: -200px; right: -200px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(200,147,43,0.18) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .article-final-cta::after {
+    content: '';
+    position: absolute;
+    bottom: -200px; left: -200px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(184,92,56,0.12) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .article-final-cta .container {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 720px;
+  }
+  .article-final-cta .label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 20px;
+    font-weight: 600;
+  }
+  .article-final-cta h2 {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: clamp(32px, 4vw, 52px);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+    font-variation-settings: "opsz" 144;
+  }
+  .article-final-cta h2 em { font-family: var(--serif); font-variation-settings: "opsz" 144; font-style: italic; color: var(--amber); font-weight: 300; }
+  .article-final-cta p {
+    font-size: 17px;
+    line-height: 1.65;
+    color: rgba(244,239,230,0.8);
+    margin-bottom: 36px;
+  }
+  .article-final-cta .cta-row {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .article-final-cta .btn-primary {
+    background: var(--amber);
+    color: var(--navy);
+    padding: 16px 32px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+  .article-final-cta .btn-primary:hover { background: var(--amber-bright); transform: translateY(-1px); }
+  .article-final-cta .btn-ghost {
+    background: transparent;
+    color: var(--cream);
+    border: 1px solid rgba(244,239,230,0.3);
+    padding: 16px 32px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+  .article-final-cta .btn-ghost:hover { border-color: var(--cream); background: rgba(244,239,230,0.05); }
+
+  @media (max-width: 900px) {
+    .read-next-grid { grid-template-columns: 1fr; }
+    .pullquote { padding: 24px 28px; }
+    .pullquote p { font-size: 19px; }
+    .takeaway-box { padding: 28px 24px; }
+    .inline-cta { padding: 28px 24px; }
+    .article-body { padding: 56px 0 72px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div class="container">
+    <div class="top-bar-left">
+      <span class="top-bar-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+        <a href="tel:+919676889797">+91 9676 889 797</a>
+      </span>
+      <span class="top-bar-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <a href="mailto:vpatel@proteamadvisory.com">vpatel@proteamadvisory.com</a>
+      </span>
+    </div>
+    <div class="top-bar-right">
+      <span class="top-bar-item">Hyderabad · Serving Global Enterprises</span>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="container nav">
+    <a href="index.html" class="logo">proteam</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="case-studies.html">Case Studies</a></li>
+      <li><a href="insights.html" class="active">Insights</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <a href="contact.html" class="nav-cta">Free Consultation</a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+  </div>
+</header>
+
+<!-- MOBILE NAV -->
+<nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+  <ul class="mobile-nav-links">
+    <li><a href="index.html">Home <span>&rarr;</span></a></li>
+    <li><a href="about.html">About <span>&rarr;</span></a></li>
+    <li><a href="services.html">Services <span>&rarr;</span></a></li>
+    <li><a href="case-studies.html">Case Studies <span>&rarr;</span></a></li>
+    <li><a href="insights.html">Insights <span>&rarr;</span></a></li>
+    <li><a href="contact.html">Contact <span>&rarr;</span></a></li>
+  </ul>
+  <a href="contact.html" class="mobile-nav-cta">Book Free Consultation &rarr;</a>
+</nav>
+
+<!-- ARTICLE HERO -->
+<section class="article-hero">
+  <div class="container">
+    <div class="article-breadcrumb">
+      <a href="index.html">Home</a><span class="sep">/</span>
+      <a href="insights.html">Insights</a><span class="sep">/</span>
+      <span>SaaS Management</span>
+    </div>
+    <div class="article-tag">SaaS Management</div>
+    <h1 class="article-title">The Shadow AI inventory: a <em>2026 audit playbook</em> for CIOs.</h1>
+    <p class="article-lede">Browser-based AI tools, departmental Cursor seats, embedded agent licences inside SaaS contracts you already own. A four-step discovery sweep that takes a week and finds 2-3x what your CASB sees.</p>
+    <div class="article-meta">
+      <div class="author">
+        <div class="author-avatar">VP</div>
+        <div>
+          <div class="author-name">Vinod Patel</div>
+          <div>Managing Partner, Proteam Advisory</div>
+        </div>
+      </div>
+      <span class="sep">·</span>
+      <span>14 January 2026</span>
+      <span class="sep">·</span>
+      <span>6 min read</span>
+    </div>
+  </div>
+</section>
+
+<section class="article-body">
+  <div class="container">
+
+    <p>The phrase "Shadow IT" has been with us since the cloud era began. Shadow AI is the same problem with a faster compounding rate. In the last 12 months we've sat in 14 enterprise discovery exercises where the AI inventory the IT team produced was between 30% and 60% smaller than the inventory we were able to surface in a four-step sweep.</p>
+
+    <p>For CIOs preparing for the wave of AI governance audits — internal, regulatory, and from the board — knowing what's actually in the estate matters more than ever. This is the discovery sweep that consistently finds the missing 30-60%.</p>
+
+    <h2>Why the standard inventory misses so much</h2>
+
+    <p>Most enterprise AI inventories rely on three sources: the procurement record, the SSO directory, and the CASB or DLP feed. All three are necessary. None of them is sufficient.</p>
+
+    <p>Procurement records capture the AI tools that came through formal purchasing — typically the larger commitments. They miss the per-seat tools paid on individual corporate cards, the free-tier accounts that haven't yet hit a paywall, and the AI capabilities that came embedded inside SaaS contracts already on the books.</p>
+
+    <p>The SSO directory captures tools that have been integrated with corporate identity. Free-tier and personal-account-based AI tools rarely qualify. Browser-based tools used without authentication are entirely invisible.</p>
+
+    <p>The CASB or DLP feed captures network traffic to known AI domains. It typically lags the rate at which new tools appear (a tool that launched last month likely isn't in the CASB ruleset yet) and misses anything routed through general-purpose cloud services.</p>
+
+    <h2>The four-step sweep</h2>
+
+    <p>The sweep takes a working week with a small team and produces an inventory that is materially more complete than any single source provides.</p>
+
+    <h3>Step 1: Corporate card analysis</h3>
+
+    <p>Pull 18 months of corporate card transactions, filtered to recurring charges below the procurement-approval threshold. Sort by merchant. The list of merchant names that appear here is, in most enterprises, the largest single source of "Shadow AI" — individual or departmental subscriptions to tools like Cursor, Perplexity Pro, ChatGPT Team, Notion AI, Otter, Fathom, Loom AI, Granola, Read.ai, and dozens of vertical-specific AI tools.</p>
+
+    <p>The merchants are usually self-evident; categorisation takes a few hours. The output is a list of "AI tools the enterprise is paying for that nobody at the centre knew about." In one recent engagement, this step alone surfaced 47 distinct vendors and approximately $340,000 of annual spend.</p>
+
+    <h3>Step 2: Browser telemetry sweep</h3>
+
+    <p>If your endpoint management deploys a browser fleet (Edge for Business, Chrome Enterprise), enable browser telemetry against a curated list of AI-tool domains for a 30-day window. The list should include the obvious entrants (chat.openai.com, claude.ai, gemini.google.com, copilot.microsoft.com) and the long tail (notion.so/ai, cursor.com, perplexity.ai, you.com, character.ai, replit.com, midjourney.com, runwayml.com, pika.art, plus the 80-100 second-tier tools that appear in most enterprise traffic).</p>
+
+    <p>The telemetry produces both a usage pattern (how often, by which department) and an exposure profile (which users are routing potentially sensitive corporate context into which tools). For audit and risk purposes, the exposure profile matters more than the volume figure.</p>
+
+    <h3>Step 3: Embedded-AI contract sweep</h3>
+
+    <p>The least visible category of AI tooling is the AI features embedded in SaaS contracts the enterprise has already signed. ServiceNow Now Assist, Salesforce Einstein Copilot, Microsoft 365 Copilot, GitHub Copilot, Workday Illuminate, Atlassian Intelligence, Slack AI — every major SaaS platform now ships AI features either bundled or as a paid add-on. Many of these are licensed on terms that change consumption-based pricing.</p>
+
+    <p>The sweep here is to pull every active SaaS contract above a meaningful threshold and audit the AI inclusions: which features are bundled, which are paid add-ons, what the consumption metering looks like, and what the enterprise has actually enabled. The gap between "what we're contractually licensed for" and "what we have switched on" is itself useful information for governance.</p>
+
+    <h3>Step 4: Repository and code-context audit</h3>
+
+    <p>For technical AI tools — coding assistants in particular — the missing inventory is usually in the engineering organisation. GitHub Copilot, Cursor, Claude Code, Codeium, Tabnine, Continue.dev, and a growing list of smaller tools all have varying degrees of corporate visibility.</p>
+
+    <p>The audit looks at three artefacts: editor configurations checked into repositories, IDE plugin manifests on developer endpoints (where MDM access permits), and the corporate package manager logs for AI-related dependencies. The output is a picture of which AI coding tools are actually in active developer workflows, regardless of whether they were procured centrally.</p>
+
+    <div class="pullquote">
+      <p>The Shadow AI inventory question isn't whether your engineers are using AI. They are. The question is whether the corporate context they're feeding into AI tools is going somewhere your governance posture says is acceptable.</p>
+    </div>
+
+    <h2>What to do with the inventory once you have it</h2>
+
+    <p>The discovery is the easy part. Three governance moves usually follow.</p>
+
+    <h3>Consolidation where it makes sense</h3>
+
+    <p>Three different teams paying for three overlapping AI tools is wasted spend. The inventory makes the consolidation conversation possible — and consolidation onto an enterprise contract usually buys both better pricing and meaningfully better governance posture (data handling commitments, audit logs, SSO integration).</p>
+
+    <h3>Approved-list governance</h3>
+
+    <p>Rather than blocking everything that isn't on the corporate list, the high-functioning enterprises run an approved-list model: tools that have been through a lightweight risk review can be reimbursed; tools that haven't, can't. The reimbursement gate is the enforcement mechanism, not network blocks.</p>
+
+    <h3>Annual refresh cadence</h3>
+
+    <p>The Shadow AI inventory ages quickly. New tools appear monthly. The four-step sweep run annually keeps the picture current; run quarterly for sectors where the AI tooling pace is fastest (engineering organisations, marketing, knowledge-work professional services).</p>
+
+    <div class="inline-cta">
+      <div class="inline-cta-text">Need a Shadow AI inventory before your next governance review? We can <em>run the sweep</em> in two weeks.</div>
+      <a href="contact.html?source=article-shadow-ai" class="inline-cta-btn">Book a free consultation →</a>
+    </div>
+
+    <h2>The CIO's audit-ready position</h2>
+
+    <p>For an internal or regulatory AI audit, three artefacts demonstrate a credible governance posture.</p>
+
+    <p><strong>The inventory itself</strong>, dated, with sources documented (procurement, SSO, browser telemetry, contracts, repositories). A current, sourced inventory is the foundation of every other governance conversation.</p>
+
+    <p><strong>The approved-list policy</strong>, with its risk review criteria, its decision history, and its exceptions register. Auditors look for evidence of consistent application; intent matters less than evidence.</p>
+
+    <p><strong>The data-flow categorisation</strong>: for each AI tool in the inventory, what categories of corporate data are reaching it, under what data handling commitments, with what residency. This is the artefact most enterprises don't have and most auditors increasingly ask for.</p>
+
+    <div class="takeaway-box">
+      <div class="label">Practitioner's Takeaway</div>
+      <h3>You can't govern what you can't see. The four-step sweep makes the estate visible.</h3>
+      <ul>
+        <li>Corporate card analysis surfaces departmental subscriptions; browser telemetry surfaces individual usage; contract sweep surfaces embedded AI; repository audit surfaces engineering tooling.</li>
+        <li>Run the sweep before the audit, not after. The artefacts you need for a credible governance posture take a week to produce — but only if you start before someone asks.</li>
+        <li>Consolidation is usually the financial case. Governance is usually the regulatory case. The inventory enables both.</li>
+        <li>Re-run annually at minimum. Quarterly in fast-moving organisations.</li>
+      </ul>
+    </div>
+
+    <h2>The shorter version</h2>
+
+    <p>The Shadow AI inventory most enterprises maintain is missing the largest, fastest-growing portion of the estate. The four-step sweep is a week's work and produces an inventory that holds up under audit. Run it now; the next governance conversation will be about something else, but it will assume this one has been done.</p>
+
+  </div>
+</section>
+<!-- READ NEXT -->
+<section class="read-next">
+  <div class="container">
+    <div class="read-next-head">
+      <div class="label">Read next</div>
+      <h2>Other <em>field notes</em> from the practice.</h2>
+    </div>
+    <div class="read-next-grid">
+      <a href="article-oracle-java.html" class="next-card">
+        <div class="meta">
+          <span class="tag">Vendor Playbook</span>
+          <span>·</span>
+          <span>9 min</span>
+        </div>
+        <h3>The Oracle Java SE reset: what every <em>finance team</em> should ask before April renewals.</h3>
+        <span class="arrow">Read on <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+      </a>
+
+      <a href="article-microsoft365-pharma.html" class="next-card">
+        <div class="meta">
+          <span class="tag">Case Scenario</span>
+          <span>·</span>
+          <span>6 min</span>
+        </div>
+        <h3>How a global pharma client cut Microsoft 365 spend by <em>34%</em> without losing a single user.</h3>
+        <span class="arrow">Read on <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+      </a>
+
+      <a href="article-copilot-shelfware.html" class="next-card">
+        <div class="meta">
+          <span class="tag">AI &amp; Copilot</span>
+          <span>·</span>
+          <span>7 min</span>
+        </div>
+        <h3>The Copilot sprawl pattern nobody is talking about: <em>shelfware at scale</em>.</h3>
+        <span class="arrow">Read on <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+      </a>
+
+    </div>
+  </div>
+</section>
+<!-- FINAL CTA -->
+<section class="article-final-cta">
+  <div class="container">
+    <div class="label">Ready to dig deeper?</div>
+    <h2>Bring us your <em>real situation</em>.</h2>
+    <p>30-minute, no-obligation review with a senior consultant. We'll map your contract, model the alternatives, and tell you whether you actually need our help — honestly.</p>
+    <div class="cta-row">
+      <a href="contact.html?source=article-shadow-ai" class="btn-primary">Book a free consultation</a>
+      <a href="insights.html" class="btn-ghost">More insights</a>
+    </div>
+  </div>
+</section>
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a href="index.html" class="logo" style="color: var(--cream);">proteam</a>
+        <h3>SAM specialists. Nothing else.</h3>
+        <p>An independent Software Asset Management consultancy serving enterprises across India, the UK, the US, and the Middle East.</p>
+        <div class="foot-social">
+          <div class="foot-social-label">Follow us on</div>
+          <div class="foot-social-icons">
+            <a href="#" aria-label="LinkedIn" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+            <a href="#" aria-label="X (Twitter)" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.53 3H21l-7.39 8.45L22.5 21h-6.83l-5.34-6.99L3.5 21H0l7.91-9.04L0.5 3h7l4.83 6.4L17.53 3zm-2.39 16h2.06L7.05 4.85H4.83L15.14 19z"/></svg>
+            </a>
+            <a href="#" aria-label="Instagram" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+            <a href="#" aria-label="YouTube" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="currentColor"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="foot-col">
+        <h5>Services</h5>
+        <ul>
+          <li><a href="service-license-optimization.html">Licence Optimisation</a></li>
+          <li><a href="service-audit-defence.html">Audit Defence</a></li>
+          <li><a href="service-sam-baselining.html">SAM Baselining</a></li>
+          <li><a href="service-ai-spend.html">AI Spend Management</a></li>
+          <li><a href="service-ai-adoption.html">AI Adoption &amp; Value</a></li>
+          <li><a href="service-saas-management.html">SaaS Management</a></li>
+          <li><a href="service-cloud-finops.html">Cloud FinOps</a></li>
+          <li><a href="services.html">All Services</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="about.html">About</a></li>
+          <li><a href="case-studies.html">Case Studies</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="insights.html">Insights</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="careers.html">Careers</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5>Get in touch</h5>
+        <address>
+          Suite #309&ndash;312<br>
+          KTC Illumination Towers<br>
+          Madhapur, Hyderabad<br>
+          Telangana, India<br><br>
+          <a href="tel:+919676889797">+91 9676 889 797</a><br>
+          <a href="mailto:vpatel@proteamadvisory.com">vpatel@proteamadvisory.com</a>
+        </address>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <div>&copy; 2026 Proteam Advisory. All rights reserved.</div>
+      <div style="display:flex; gap:24px; flex-wrap:wrap;">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Cookies</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Mobile nav
+  const toggle = document.getElementById("menuToggle");
+  const mobileNav = document.getElementById("mobileNav");
+  function openMenu() { mobileNav.style.display = "block"; requestAnimationFrame(() => mobileNav.classList.add("is-open")); toggle.classList.add("open"); toggle.setAttribute("aria-expanded","true"); document.body.style.overflow = "hidden"; }
+  function closeMenu() { mobileNav.classList.remove("is-open"); toggle.classList.remove("open"); toggle.setAttribute("aria-expanded","false"); document.body.style.overflow = ""; setTimeout(() => { if (!mobileNav.classList.contains("is-open")) mobileNav.style.display = "none"; }, 350); }
+  toggle.addEventListener("click", () => mobileNav.classList.contains("is-open") ? closeMenu() : openMenu());
+  mobileNav.querySelectorAll("a").forEach(a => a.addEventListener("click", closeMenu));
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && mobileNav.classList.contains("is-open")) closeMenu(); });
+</script>
+</body>
+</html>
